@@ -1,0 +1,111 @@
+﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.RegisterFormViewModel
+@using NEO_SYSTEM_TECHNOLOGY.Entity.Enum
+
+@{
+    ViewBag.Title = "Добавить заказчика";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 style="margin: 20px;" >Добавить заказчика</h2>
+
+@using (Html.BeginForm("Save", "Organization", FormMethod.Post, new { style = "margin: 20px;" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(p => p.Organization.Name, "Название Oрганизации")
+        @Html.TextBoxFor(p => p.Organization.Name, new {@class="form-control text-box", style="width:500px; height:35px"})
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.Person.FirstName, "Имя Заказчика")
+        @Html.TextBoxFor(p => p.Person.FirstName, new {@class="form-control text-box js-box", style="width:500px; height:29px"})
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.Person.LastName, "Фамилия Заказчика")
+        @Html.TextBoxFor(p => p.Person.LastName, new {@class="form-control text-box js-box", style="width:500px; height:29px"})
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.Person.PhoneNumber, "Телефон Заказчика")
+        @Html.TextBoxFor(p => p.Person.PhoneNumber, new {@class="form-control text-box", style="width:500px; height:29px"})
+    </div>  
+    
+    <div class="form-group">
+        @Html.LabelFor(p => p.Person.Email, "Почтовый адрес заказчика")
+        @Html.TextBoxFor(p => p.Person.Email, new {@class="form-control text-box", style="width:500px; height:29px"})
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.Contract.ContractType, "Контракт")
+        @Html.DropDownListFor(p => p.Contract.ContractType,  new SelectList(Model.ContractType, "Value", "Text"), new {@class="form-control drop-list", style="width:500px; height:35px", id="contractType"})
+    </div>
+
+    <div class="form-group" id="contract">
+        
+        @Html.LabelFor(p => p.Contract.StartDate, "Дата Контракта")
+        @Html.TextBoxFor(p => p.Contract.StartDate, new {@class="form-control text-box", style="width:500px; height:29px"})
+
+        @Html.LabelFor(p => p.Contract.EndDate, "Дата Окончания Контракта")
+        @Html.TextBoxFor(p => p.Contract.EndDate, new {@class="form-control text-box", style="width:500px; height:29px"})
+
+        @Html.LabelFor(p => p.Contract.OrderNumber, "Номер Заказа")
+        @Html.TextBoxFor(p => p.Contract.OrderNumber, new {@class="form-control text-box", style="width:500px; height:29px"})
+
+        @Html.LabelFor(p => p.Invoice.InvoiceNumber, "Номер Накладной")
+        @Html.TextBoxFor(p => p.Invoice.InvoiceNumber, new {@class="form-control text-box", style="width:500px; height:29px"})
+
+        @Html.LabelFor(p => p.Invoice.InvoiceDate, "Дата Накладной")
+        @Html.TextBoxFor(p => p.Invoice.InvoiceDate, new {@class="form-control text-box", style="width:500px; height:29px"})
+
+        @Html.LabelFor(p => p.Invoice.InvoiceSum, "Сумма Накладной в Сомони")
+        @Html.TextBoxFor(p => p.Invoice.InvoiceSum, new {@class="form-control text-box", style="width:500px; height:29px"})
+
+
+    </div>
+
+
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@section scripts{
+    <script>
+
+        $(document).ready(function ()
+        {
+
+            Select();
+
+            $("#contractType").change(function ()
+            {
+                Select();
+            });
+
+        });
+
+
+
+        function Select() {
+            var select = document.getElementById("contractType");
+            var index = select.selectedIndex;
+            var text = select.options[index].text;
+            console.log(text);
+
+            if (text == "Контракт")
+            {
+                document.getElementById("contract").style.display = "block"
+            } else {
+                document.getElementById("contract").style.display = "none"
+            }
+
+        }
+
+
+
+    </script>
+}
+
+
+
+     @*    https://www.c-sharpcorner.com/article/creating-dynamic-dropdown-lists-in-asp-net-mvc-using-ajax/ *@

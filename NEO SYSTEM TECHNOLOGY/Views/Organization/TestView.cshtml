@@ -1,0 +1,166 @@
+﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.RegisterFormViewModel
+
+@{
+    ViewBag.Title = "Добавить заказчика";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 style="margin: 20px;">Добавить заказчика</h2>
+
+@using (Html.BeginForm("Save", "Organization", FormMethod.Post, new { style = "margin: 20px;" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(p => p.Organization.Name, "Название организации")
+        @Html.TextBoxFor(p => p.Organization.Name, new {@class="form-control text-box", style="width:500px; height:35px"})
+    </div>
+
+@*     <div class="form-group">
+        @Html.LabelFor(p => p.Contract.ContractType, "Контракт")
+        @Html.DropDownListFor(p => p.Contract.ContractType,  new SelectList(Model.ContractType, "Value", "Text"), new {@class="form-control drop-list", style="width:500px; height:35px", id="contractType"})
+    </div>
+ *@
+    <div class="form-group" id="testId">
+        @Html.LabelFor(p => p.Organization.PersonID, "ФИО Заказчика")
+        @Html.TextBoxFor(p => p.Person.FirstName, new {@class="form-control text-box js-box", style="width:500px; height:29px"})
+    </div>
+    @*
+    <div class="form-group">
+        @Html.LabelFor(p => p.Organization.PersonID, "ФИО Заказчика")
+        @Html.TextBoxFor(p => p.Person.LastName, new {@class="form-control text-box", style="width:500px; height:29px"})
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.Person.PhoneNumber, "Телефон Заказчика")
+        @Html.TextBoxFor(p => p.Person.PhoneNumber, new {@class="form-control text-box", style="width:500px; height:29px"})
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.Person.Email, "Почтовый адрес заказчика")
+        @Html.TextBoxFor(p => p.Person.Email, new {@class="form-control text-box", style="width:500px; height:29px"})
+    </div> *@
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function ()
+        {
+
+            $("#testId").hide();
+
+            var selectedT = $("#contractType option:selected").val();
+
+
+            $("#contractType").change(function ()
+            {
+                console.log(selectedT);
+            })
+
+
+
+            var selectedContract = $("#contractID option:selected").val();
+            //selectedContract = JSON.stringify(selectedContract);
+
+            $("#contractID").change(function ()
+            {
+                if (selectedContract.includes("Контракт"))
+                {
+                    console.log(selectedContract);
+                    $("#testId").show();
+                } else
+                {
+                    $("#testId").hide();
+                }
+            });
+
+
+
+            // $('#contractID').change(function ()
+            // {
+            //     var selectedContract = $('#contractID .js-drop').val();
+            //     //selectedContract = JSON.stringify(selectedContract);
+            //     console.log(selectedContract);
+
+
+            //     $.getJSON('@Url.Action("Create", "Organization")', { contractType: selectedContract })
+
+
+            //     // $.ajax({
+            //     //     type: "POST",
+            //     //     url: "/Organization/Create",
+            //     //     data: { contractType: selectedContract },
+            //     //     contentType: "application/json; charset=utf-8",
+            //     //     dataType: "json",
+            //     //     async: false
+
+            //     //     });
+
+
+
+            // });
+
+        });
+
+                // function contractType()
+                // {
+                //     var selectedContract = $('#contractID .js-drop').val();
+
+                //     if ($("#contractID .js-drop option: selected").val().includes("Контракт"))
+                //     {
+                //         console.log(selectedContract);
+                //         $("#testId .js-box").show();
+                //     } else {
+                //         $("#testId .js-box").hide();
+                //     }
+
+                // };
+
+                // $('#Country').change(function ()
+                // {
+                //     var selectedCountry = $("#Country").val();
+                //     var regionsSelect = $('#Region');
+                //     regionsSelect.empty();
+                //     if (selectedCountry != null && selectedCountry != '')
+                //     {
+                //         $.getJSON('@Url.Action("GetRegions")', { iso3: selectedCountry }, function (regions)
+                //         {
+                //             if (regions != null && !jQuery.isEmptyObject(regions))
+                //             {
+                //                 regionsSelect.append($('<option/>', {
+                //                     value: null,
+                //                     text: ""
+                //                 }));
+                //                 $.each(regions, function (index, region)
+                //                 {
+                //                     regionsSelect.append($('<option/>', {
+                //                         value: region.Value,
+                //                         text: region.Text
+                //                     }));
+                //                 });
+                //             };
+                //         });
+                //     }
+                // });
+
+
+                // $(document).ready(function updateView ()
+                // {
+                //     var = selectedId = $("#contractID .js-select option:selected").val();
+
+                //     $.ajax({
+                //         type: "POST",
+                //         cache: false,
+                //         url: @Url.Action("Create", "Organization"),
+                //         data: {selectedID: selectedID},
+
+                //     });
+                // });
+
+    </script>
+}
+
+
+
+@*    https://www.c-sharpcorner.com/article/creating-dynamic-dropdown-lists-in-asp-net-mvc-using-ajax/ *@

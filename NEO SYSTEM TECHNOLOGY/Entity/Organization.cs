@@ -4,10 +4,6 @@
     {
         public int ID { get; set; }
         public string Name { get; set; }
-
-        public List<Contract> Contracts { get; set; }
-        public int ContractID { get; set; }
-
         public List<Person> People { get; set; }
         public int PersonID { get; set; }
 

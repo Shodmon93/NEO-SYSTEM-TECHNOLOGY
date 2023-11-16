@@ -36,40 +36,10 @@
         @Html.TextBoxFor(p => p.Person.Email, new {@class="form-control text-box", style="width:500px; height:29px"})
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(p => p.Contract.ContractType, "Контракт")
-        @Html.DropDownListFor(p => p.Contract.ContractType,  new SelectList(Model.ContractType, "Value", "Text"), new {@class="form-control drop-list", style="width:500px; height:35px", id="contractType"})
-    </div>
-
-    <div class="form-group" id="contract">
-        
-        @Html.LabelFor(p => p.Contract.StartDate, "Дата Контракта")
-        @Html.TextBoxFor(p => p.Contract.StartDate, new {@class="form-control text-box", style="width:500px; height:29px"})
-
-        @Html.LabelFor(p => p.Contract.EndDate, "Дата Окончания Контракта")
-        @Html.TextBoxFor(p => p.Contract.EndDate, new {@class="form-control text-box", style="width:500px; height:29px"})
-
-        @Html.LabelFor(p => p.Contract.OrderNumber, "Номер Заказа")
-        @Html.TextBoxFor(p => p.Contract.OrderNumber, new {@class="form-control text-box", style="width:500px; height:29px"})
-
-        @Html.LabelFor(p => p.Invoice.InvoiceNumber, "Номер Накладной")
-        @Html.TextBoxFor(p => p.Invoice.InvoiceNumber, new {@class="form-control text-box", style="width:500px; height:29px"})
-
-        @Html.LabelFor(p => p.Invoice.InvoiceDate, "Дата Накладной")
-        @Html.TextBoxFor(p => p.Invoice.InvoiceDate, new {@class="form-control text-box", style="width:500px; height:29px"})
-
-        @Html.LabelFor(p => p.Invoice.InvoiceSum, "Сумма Накладной в Сомони")
-        @Html.TextBoxFor(p => p.Invoice.InvoiceSum, new {@class="form-control text-box", style="width:500px; height:29px"})
-
-
-    </div>
-
-
-
     <button type="submit" class="btn btn-primary">Save</button>
 }
 
-@section scripts{
+@* @section scripts{
     <script>
 
         $(document).ready(function ()
@@ -104,7 +74,7 @@
 
 
     </script>
-}
+} *@
 
 
 

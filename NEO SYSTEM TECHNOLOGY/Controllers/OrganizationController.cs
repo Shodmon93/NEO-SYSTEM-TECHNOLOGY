@@ -35,7 +35,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
             _context.Add(viewModel.Organization);
             _context.Add(viewModel.Person);
            // _context.Add(viewModel.Contract);
-            _context.Add(viewModel.Invoice);
+           // _context.Add(viewModel.Invoice);
 
 
 
@@ -47,7 +47,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
             _context.SaveChanges();
 
 
-            return View("TestView");
+            return View("Index");
         }
 
         public IActionResult Create(string contractType)

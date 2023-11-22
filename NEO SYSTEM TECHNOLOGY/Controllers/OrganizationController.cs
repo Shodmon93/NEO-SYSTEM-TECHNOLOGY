@@ -3,16 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using NEO_SYSTEM_TECHNOLOGY.Data;
 using NEO_SYSTEM_TECHNOLOGY.Entity;
 using NEO_SYSTEM_TECHNOLOGY.Entity.Enum;
-using NEO_SYSTEM_TECHNOLOGY.ViewModels;
+
 
 namespace NEO_SYSTEM_TECHNOLOGY.Controllers
 {
+  
     public class OrganizationController : Controller
     {
-
-
-
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
         public OrganizationController()
         {
@@ -21,55 +19,41 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
 
         public IActionResult Index()
         {
+            var organization = _context.Organizations.Include(p => p.Person).ToList();
 
-            return View("Index");
+            return View(organization);
         }
 
-        public IActionResult Save(RegisterFormViewModel viewModel)
+        public IActionResult Details(int id) 
         {
+            var organization = _context.Organizations.Include(p => p.Person).SingleOrDefault(p => p.ID == id);
 
-            var organization = new Organization();
+            return View(organization);
 
-            
-
-            _context.Add(viewModel.Organization);
-            _context.Add(viewModel.Person);
-           // _context.Add(viewModel.Contract);
-           // _context.Add(viewModel.Invoice);
-
-
-
-
-            //_context.Add(organization);
-            //_context.Add(person);
-            //_context.Add(contract);
-            //_context.Add(invoice);
-            _context.SaveChanges();
-
-
-            return View("Index");
         }
 
-        public IActionResult Create(string contractType)
+        public IActionResult AddNewContract(int id) 
         {
-            var viewModel = new RegisterFormViewModel()
+            var organization = _context.Organizations.SingleOrDefault(p => p.ID == id);
+
+            if (organization == null)
             {
-                Organization = new Organization(),
-                Person = new Person(),
-                Contract = new Contract(),
-                Receipt = new Receipt(),
-                Invoice = new Invoice(),
-                Enactment = new Enactment()
-            };
+                return NotFound();
+            }
 
-           
-             return View("RegisterForm", viewModel);
+
+
+
+
+            return View("PersonOrgForm");
         }
 
-        public IActionResult CaseTest()
+        public IActionResult Create()
         {
-            return View("TestView"); 
+            return View("PersonOrgForm");
         }
+
+
     }
 }
 

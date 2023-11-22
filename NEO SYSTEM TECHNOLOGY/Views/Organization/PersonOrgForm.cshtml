@@ -1,4 +1,4 @@
-﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.RegisterFormViewModel
+﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.PersonOrganizationVM
 @using NEO_SYSTEM_TECHNOLOGY.Entity.Enum
 
 @{
@@ -35,6 +35,9 @@
         @Html.LabelFor(p => p.Person.Email, "Почтовый адрес заказчика")
         @Html.TextBoxFor(p => p.Person.Email, new {@class="form-control text-box", style="width:500px; height:29px"})
     </div>
+
+    @Html.HiddenFor(p => p.Organization.ID)
+    @Html.HiddenFor(p => p.Person.ID)
 
     <button type="submit" class="btn btn-primary">Save</button>
 }

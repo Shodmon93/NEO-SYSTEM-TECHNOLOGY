@@ -14,11 +14,11 @@ namespace NEO_SYSTEM_TECHNOLOGY
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            // builder.Services.AddDbContext<ApplicationDbContext>(opt =>
-            // opt.UseSqlServer(connectionString));
-
             builder.Services.AddDbContext<ApplicationDbContext>(opt =>
-            opt.UseNpgsql(connectionString));
+            opt.UseSqlServer(connectionString));
+
+            //builder.Services.AddDbContext<ApplicationDbContext>(opt =>
+            //opt.UseNpgsql(connectionString));
 
             //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

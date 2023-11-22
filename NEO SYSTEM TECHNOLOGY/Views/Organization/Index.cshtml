@@ -1,5 +1,55 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<NEO_SYSTEM_TECHNOLOGY.Entity.Organization>
 @{
+    ViewBag.Title = "Index";   
+    
 }
+
+<h2>Клиенты</h2>
+
+<div class="form-group" style="padding: 25px">
+    @Html.ActionLink("Добавить нового клиента", "New", "Organization", htmlAttributes: new { @class = "btn btn-default btn-info" })
+</div>
+
+<div>
+    <table class="table table-hover table-bordered center" style="width: 98%; margin-left:auto;margin-right:auto;">
+        <thead>
+            <tr>
+                <th>Организация</th>
+                <th>Сотрудние</th>
+                <th>Номер Телефона</th>
+                <th>Почта</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style='text-align:center; vertical-align:middle'>
+                        @Html.ActionLink(item.Name,"Details","Organization", new {id = item.ID}, null)
+                    </td>
+                    <td>
+                        @foreach (var entity in item.Person)
+                        {
+                            <p>@entity.FirstName @entity.LastName<br /></p>
+                        }
+                    </td>
+                    <td>
+                        @foreach (var entity in item.Person)
+                        {
+                            <p>@entity.PhoneNumber<br /></p>
+                        }
+                    </td>
+                    <td>
+                        @foreach (var entity in item.Person)
+                        {
+                            <p>@entity.Email<br /></p>
+
+                        }
+                    </td>
+                </tr>
+            }            
+        </tbody>
+    </table>
+</div>

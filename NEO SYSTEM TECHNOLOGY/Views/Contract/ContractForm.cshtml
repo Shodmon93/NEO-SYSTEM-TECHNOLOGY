@@ -5,37 +5,45 @@
 
 @using (Html.BeginForm("Save", "Contract", FormMethod.Post, new { style = "margin: 20px;" }))
 {
-    <div class="form-group">
+    @Html.ValidationSummary();
 
+    <div style="margin: 0px 5px;">
         <h2>@Model.Organization.Name</h2>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(p => p.Contract.OrderNumber)
-        @Html.TextBoxFor(p => p.Contract.OrderNumber, new {@class="form-control text-box js-box", style="width:500px; height:29px"})
+    <div class="form-group" style="margin: 15px 15px">
+        @Html.LabelFor(p => p.Contract.OrderNumber, new {style="margin: 0px 5px;"})
+        @Html.TextBoxFor(p => p.Contract.OrderNumber, new {@class="form-control text-box js-box", style="width:500px; height:35px"})
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(p => p.Contract.ContractSum)
-        @Html.TextBoxFor(p => p.Contract.ContractSum, new {@class="form-control text-box js-box", style="width:500px; height:29px"})
+    <div class="form-group" style="margin:15px 15px">
+        @Html.LabelFor(p => p.Contract.ContractSum, new {style="margin: 0px 5px;"})
+        @Html.TextBoxFor(p => p.Contract.ContractSum, new {@class="form-control text-box js-box", style="width:500px; height:35px"})
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(p => p.Contract.StartDate)
-        @Html.TextBoxFor(p => p.Contract.StartDate, new {@class="form-control text-box", style="width:500px; height:29px"})
+    <div class="checkbox" style="margin: 15px 0px">
+        <label>
+            @Html.CheckBoxFor(p => p.Contract.IsVatIncluded, new {style="width:50px; height:20px"}) НДС 15%
+        </label>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(p => p.Contract.EndDate)
-        @Html.TextBoxFor(p => p.Contract.EndDate, new {@class="form-control text-box", style="width:500px; height:29px"})
+    <div class="form-group" style="margin: 15px 15px">
+        @Html.LabelFor(p => p.Contract.StartDate, new {style="margin: 0px 5px;"})
+        @Html.TextBoxFor(p => p.Contract.StartDate, new {@class="form-control text-box", style="width:500px; height:35px"})
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(p => p.Contract.Currency)
-        @Html.DropDownList("Currency", Html.GetEnumSelectList<Currency>(),"Select Curency",new {@class="form-control text-box", style="width:500px; height:35px"})
+    <div class="form-group" style="margin:15px 15px">
+        @Html.LabelFor(p => p.Contract.EndDate, new {style="margin: 0px 5px;"})
+        @Html.TextBoxFor(p => p.Contract.EndDate, new {@class="form-control text-box", style="width:500px; height:35px"})
+    </div>
+
+    <div class="form-group" style="margin:15px 15px">
+        @Html.LabelFor(p => p.Contract.Currency, new {style="margin: 0px 5px;"})
+        @Html.DropDownListFor(p => p.Contract.Currency, Html.GetEnumSelectList<Currency>(),"Выберите валюту", new {@class="form-control text-box", style="width:500px; height:35px"})
     </div>
 
     @Html.HiddenFor(p => p.Organization.ID)
+    @Html.HiddenFor(p => p.Organization.Name)
 
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-default btn-outline-primary" style="margin: 10px 20px; width:200px;">Save</button>
 }

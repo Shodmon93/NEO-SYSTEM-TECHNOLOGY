@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NEO_SYSTEM_TECHNOLOGY.Data;
 
@@ -11,9 +12,10 @@ using NEO_SYSTEM_TECHNOLOGY.Data;
 namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231123095643_ChangeThePriceTypeFomIntTodecimal")]
+    partial class ChangeThePriceTypeFomIntTodecimal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,14 +32,14 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<decimal>("ContractSum")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("ContractSum")
+                        .HasColumnType("int");
 
                     b.Property<int>("Currency")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsVatIncluded")
                         .HasColumnType("bit");
@@ -49,7 +51,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("ID");
 

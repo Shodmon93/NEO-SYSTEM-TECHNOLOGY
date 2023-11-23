@@ -41,6 +41,13 @@ namespace NEO_SYSTEM_TECHNOLOGY.Data
                 .HasForeignKey(p => p.OrganizationID)
                 .IsRequired();
 
+            modelBuilder.Entity<Contract>()
+             .Property(p => p.StartDate)
+             .HasColumnType("date");
+
+            modelBuilder.Entity<Contract>()
+             .Property(p => p.EndDate)
+             .HasColumnType("date");
         }
     }
 }

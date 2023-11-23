@@ -1,14 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NEO_SYSTEM_TECHNOLOGY.Data;
 using NEO_SYSTEM_TECHNOLOGY.Entity;
 using NEO_SYSTEM_TECHNOLOGY.ViewModels;
 using System.Diagnostics.Contracts;
 using Contract = NEO_SYSTEM_TECHNOLOGY.Entity.Contract;
 
+
+
 namespace NEO_SYSTEM_TECHNOLOGY.Controllers
 {
     public class ContractController : Controller
     {
+      private const decimal TAX = 15;
+
         private readonly ApplicationDbContext _context;
 
         public ContractController()
@@ -28,32 +33,60 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
         }
         public IActionResult Save(OrganizationContractVM viewModel) 
         {
-            var organizationInDb = _context.Organizations.SingleOrDefault(p => p.ID == viewModel.Organization.ID);
+            var organizationInDb = _context.Organizations.Single(p => p.ID == viewModel.Organization.ID);
 
-            if  (organizationInDb == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
-
+                var vm = new OrganizationContractVM
+                {
+                    Organization = organizationInDb,
+                    Contract = viewModel.Contract
+                };
+                return View("ContractForm", vm);
             }
+            var priceWithTax = viewModel.Contract.ContractSum + (viewModel.Contract.ContractSum * ( TAX / 100));
 
-            var contract = new Contract()
+            if (viewModel.Contract.ID == 0)
             {
-                Organization = organizationInDb,
-                OrderNumber = viewModel.Contract.OrderNumber,
-                ContractSum = viewModel.Contract.ContractSum,
-                StartDate = viewModel.Contract.StartDate,
-                EndDate = viewModel.Contract.EndDate,
+                if (viewModel.Contract.IsVatIncluded)
+                {
+                    viewModel.Contract.ContractSum = priceWithTax;
+                }
 
-            };
-            _context.Contracts.Add(contract);
+                Contract contract = new Contract
+                {
+                    OrderNumber = viewModel.Contract.OrderNumber,
+                    ContractSum = viewModel.Contract.ContractSum,
+                    StartDate = viewModel.Contract.StartDate,
+                    EndDate = viewModel.Contract.EndDate,
+                    Currency = viewModel.Contract.Currency,
+                    IsVatIncluded = viewModel.Contract.IsVatIncluded,
+                    Organization = organizationInDb
+                };
+
+                _context.Contracts.Add(contract);
+            }
+            else
+            {
+                var contractInDb = _context.Contracts.Single(p => p.ID == viewModel.Contract.ID);
+                contractInDb.OrderNumber = viewModel.Contract.OrderNumber;
+                contractInDb.ContractSum =  viewModel.Contract.ContractSum;
+                contractInDb.StartDate = viewModel.Contract.StartDate;
+                contractInDb.EndDate = viewModel.Contract.EndDate;
+                contractInDb.Currency = viewModel.Contract.Currency;
+                contractInDb.IsVatIncluded = viewModel.Contract.IsVatIncluded;
+            }
             _context.SaveChanges();
-
-            return View("Index");
+            
+            return RedirectToAction("Index", "Contract");
         }
 
         public IActionResult Index()
         {
-            return View();
+            var contractList = _context.Contracts.Include(p => p.Organization).ToList();
+                     
+
+            return View(contractList);
         }
     }
 }

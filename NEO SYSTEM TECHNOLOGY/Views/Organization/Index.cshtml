@@ -7,7 +7,7 @@
 <h2>Клиенты</h2>
 
 <div class="form-group" style="padding: 25px">
-    @Html.ActionLink("Добавить нового клиента", "New", "Organization", htmlAttributes: new { @class = "btn btn-default btn-info" })
+    @Html.ActionLink("Добавить нового клиента", "Create", "Organization", null , new { @class = "btn btn-default btn-outline-primary"})
 </div>
 
 <div>
@@ -26,8 +26,9 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td style='text-align:center; vertical-align:middle'>
-                        @Html.ActionLink(item.Name,"Details","Organization", new {id = item.ID}, null)
+                    <td style='vertical-align:middle'>
+                     
+                        @Html.ActionLink(item.Name,"Details","Organization", new {id = item.ID},  new {@style="text-decoration:none; color: black"})
                     </td>
                     <td>
                         @foreach (var entity in item.Person)

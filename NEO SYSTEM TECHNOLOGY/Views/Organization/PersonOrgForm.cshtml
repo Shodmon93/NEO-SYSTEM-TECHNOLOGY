@@ -11,35 +11,45 @@
 
 @using (Html.BeginForm("Save", "Organization", FormMethod.Post, new { style = "margin: 20px;" }))
 {
+
     <div class="form-group">
         @Html.LabelFor(p => p.Organization.Name, "Название Oрганизации")
         @Html.TextBoxFor(p => p.Organization.Name, new {@class="form-control text-box", style="width:500px; height:35px"})
+        @Html.ValidationMessageFor(p => p.Organization.Name)
     </div>
 
     <div class="form-group">
         @Html.LabelFor(p => p.Person.FirstName, "Имя Заказчика")
         @Html.TextBoxFor(p => p.Person.FirstName, new {@class="form-control text-box js-box", style="width:500px; height:29px"})
+        @Html.ValidationMessageFor(p => p.Person.FirstName)
+
     </div>
 
     <div class="form-group">
         @Html.LabelFor(p => p.Person.LastName, "Фамилия Заказчика")
         @Html.TextBoxFor(p => p.Person.LastName, new {@class="form-control text-box js-box", style="width:500px; height:29px"})
+        @Html.ValidationMessageFor(p => p.Person.LastName)
+
     </div>
 
     <div class="form-group">
         @Html.LabelFor(p => p.Person.PhoneNumber, "Телефон Заказчика")
         @Html.TextBoxFor(p => p.Person.PhoneNumber, new {@class="form-control text-box", style="width:500px; height:29px"})
+        @Html.ValidationMessageFor(p => p.Person.PhoneNumber)
+
     </div>  
     
     <div class="form-group">
         @Html.LabelFor(p => p.Person.Email, "Почтовый адрес заказчика")
         @Html.TextBoxFor(p => p.Person.Email, new {@class="form-control text-box", style="width:500px; height:29px"})
+        @Html.ValidationMessageFor(p => p.Person.Email)
+
     </div>
 
     @Html.HiddenFor(p => p.Organization.ID)
     @Html.HiddenFor(p => p.Person.ID)
 
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-default btn-outline-primary">Save</button>
 }
 
 @* @section scripts{

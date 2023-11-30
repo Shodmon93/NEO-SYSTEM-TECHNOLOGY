@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NEO_SYSTEM_TECHNOLOGY.Entity
 {
-    public class Contract
+    public class Dogovor
     {
         public int ID { get; set; }
-        [Display(Name = "Номер Заказа")]
-        public int OrderNumber { get; set; }
+        [Display(Name = "Договор")]
+        public string OrderHeader { get; set; }
 
         [Display(Name = "Сумма Договора")]
-        public decimal ContractSum { get; set; }
+        public decimal DogovorSum { get; set; }
 
         [Display(Name = "Дата Договора")]
         public DateTime StartDate { get; set; }
@@ -24,6 +24,8 @@ namespace NEO_SYSTEM_TECHNOLOGY.Entity
         public bool IsVatIncluded { get; set; }
 
         public Organization Organization { get; set; }
+
+        public Receipt Receipt { get; set; }
 
     }
 }

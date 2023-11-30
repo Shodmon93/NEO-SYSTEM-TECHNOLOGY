@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NEO_SYSTEM_TECHNOLOGY.Data;
 
@@ -11,9 +12,10 @@ using NEO_SYSTEM_TECHNOLOGY.Data;
 namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231130074333_RenameContractClassToDogovor")]
+    partial class RenameContractClassToDogovor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,8 +44,8 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
                     b.Property<bool>("IsVatIncluded")
                         .HasColumnType("bit");
 
-                    b.Property<string>("OrderHeader")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("OrderNumber")
+                        .HasColumnType("int");
 
                     b.Property<int?>("OrganizationID")
                         .HasColumnType("int");
@@ -109,50 +111,10 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
                     b.ToTable("People");
                 });
 
-            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Receipt", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int>("AccountNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AmountFaceValue")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Currency")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateFaceValue")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DogovorId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsVatIncluded")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PaymentSum")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("DogovorId")
-                        .IsUnique();
-
-                    b.ToTable("Receipts");
-                });
-
             modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Dogovor", b =>
                 {
                     b.HasOne("NEO_SYSTEM_TECHNOLOGY.Entity.Organization", "Organization")
-                        .WithMany("Dogovors")
+                        .WithMany("Contracts")
                         .HasForeignKey("OrganizationID");
 
                     b.Navigation("Organization");
@@ -169,25 +131,9 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Receipt", b =>
-                {
-                    b.HasOne("NEO_SYSTEM_TECHNOLOGY.Entity.Dogovor", "Dogovor")
-                        .WithOne("Receipt")
-                        .HasForeignKey("NEO_SYSTEM_TECHNOLOGY.Entity.Receipt", "DogovorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Dogovor");
-                });
-
-            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Dogovor", b =>
-                {
-                    b.Navigation("Receipt");
-                });
-
             modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Organization", b =>
                 {
-                    b.Navigation("Dogovors");
+                    b.Navigation("Contracts");
 
                     b.Navigation("Person");
                 });

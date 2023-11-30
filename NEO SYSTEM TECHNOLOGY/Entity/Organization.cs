@@ -11,7 +11,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Entity
         public string Name { get; set; }
 
         public ICollection<Person> Person { get; set; } = new List<Person>();
-        public ICollection<Contract> Contracts { get; set; } = new List<Contract>();
+        public ICollection<Dogovor> Dogovors { get; set; } = new List<Dogovor>();
 
 
     }

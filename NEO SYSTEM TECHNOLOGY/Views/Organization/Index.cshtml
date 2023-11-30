@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<NEO_SYSTEM_TECHNOLOGY.Entity.Organization>
 @{
-    ViewBag.Title = "Index";   
-    
+    ViewBag.Title = "Index";
+
 }
 
 <h2>Клиенты</h2>
@@ -15,7 +15,7 @@
         <thead>
             <tr>
                 <th>Организация</th>
-                <th>Сотрудние</th>
+                <th>Сотрудник</th>
                 <th>Номер Телефона</th>
                 <th>Почта</th>
             </tr>
@@ -27,7 +27,7 @@
             {
                 <tr>
                     <td style='vertical-align:middle'>
-                     
+
                         @Html.ActionLink(item.Name,"Details","Organization", new {id = item.ID},  new {@style="text-decoration:none; color: black"})
                     </td>
                     <td>
@@ -50,7 +50,7 @@
                         }
                     </td>
                 </tr>
-            }            
+            }
         </tbody>
     </table>
 </div>

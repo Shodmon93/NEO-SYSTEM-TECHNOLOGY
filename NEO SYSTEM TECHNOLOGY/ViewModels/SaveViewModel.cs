@@ -7,7 +7,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
     {
         public Organization Organization { get; set; }
        // public ContractType ContractType { get; set; }
-        public Contract Contract { get; set; }
+        public Dogovor Contract { get; set; }
 
 
     

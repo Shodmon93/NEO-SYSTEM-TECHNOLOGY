@@ -8,11 +8,12 @@ namespace NEO_SYSTEM_TECHNOLOGY.Data
 
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Person> People { get; set; }
-        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<Dogovor> Dogovors { get; set; }
+        public DbSet<Receipt> Receipts { get; set; }
 
         public ApplicationDbContext()
         {
-                
+
         }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> opt)
@@ -41,13 +42,18 @@ namespace NEO_SYSTEM_TECHNOLOGY.Data
                 .HasForeignKey(p => p.OrganizationID)
                 .IsRequired();
 
-            modelBuilder.Entity<Contract>()
+            modelBuilder.Entity<Dogovor>()
              .Property(p => p.StartDate)
              .HasColumnType("date");
 
-            modelBuilder.Entity<Contract>()
+            modelBuilder.Entity<Dogovor>()
              .Property(p => p.EndDate)
              .HasColumnType("date");
+
+            modelBuilder.Entity<Dogovor>()
+                .HasOne(p => p.Receipt)
+                .WithOne(p => p.Dogovor)
+                .HasForeignKey<Receipt>(p => p.DogovorId);
         }
     }
 }

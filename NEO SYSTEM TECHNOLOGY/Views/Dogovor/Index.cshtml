@@ -1,0 +1,65 @@
+﻿@model IEnumerable<NEO_SYSTEM_TECHNOLOGY.Entity.Dogovor>
+
+<div>
+    <table class="table table-hover table-bordered center" style="width: 98%; margin-left:auto;margin-right:auto">
+        <thead>
+            <tr style="background-color: #abcad4; border-color: #0c0d0d">
+                <th style="text-align: center; vertical-align: middle">Заказчик</th>
+                <th style="text-align: center; vertical-align: middle">Номер Контракта</th>
+                <th style="text-align: center; vertical-align: middle">Дата Контракта</th>
+                <th style="text-align: center; vertical-align: middle">Дата окончания контракта</th>
+                <th style="text-align: center; vertical-align: middle">Сумма контракта в Сомони без учета НДС</th>
+                <th style="text-align: center; vertical-align: middle">Сумма контракта в Сомони с учетом НДС</th>
+                <th style="text-align: center; vertical-align: middle">Сумма контракта в USD без учета НДС</th>
+                <th style="text-align: center; vertical-align: middle">Сумма контракта в USD с учетом НДС</th>
+            </tr>
+        </thead>
+
+        <tbody style="border-color: #0c0d0d" ">
+
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td style='vertical-align:middle'>@item.Organization.Name</td>
+                    <td style="text-align: center; vertical-align: middle">
+                    @Html.ActionLink(item.OrderHeader.ToString(),"Details","Organization", new {id = item.ID},  new {@style="text-decoration:none; color: black"})
+                    </td>
+                    <td style="text-align: center; vertical-align: middle">@item.StartDate.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align: center; vertical-align: middle">@item.EndDate.ToString("dd/MM/yyyy")</td>
+
+                    <td style="text-align: center; vertical-align: middle">
+                    @if (!item.IsVatIncluded && (int)item.Currency == 1)
+                    {
+                            <p>@item.DogovorSum</p>
+                    }
+                    </td>
+
+                    <td style="text-align: center; vertical-align: middle">
+                    @if (item.IsVatIncluded && (int)item.Currency == 1)
+                    {
+                            <p>@item.DogovorSum</p>
+                    }
+                    </td>
+
+                    <td style="text-align: center; vertical-align: middle">
+                    @if (!item.IsVatIncluded && (int)item.Currency == 2)
+                    {
+                            <p>@item.DogovorSum</p>
+                    }
+                    </td>
+
+                    <td style="text-align: center; vertical-align: middle">
+                    @if (item.IsVatIncluded && (int)item.Currency == 2)
+                    {
+                            <p>@item.DogovorSum</p>
+                    }
+                    </td>
+
+                </tr>
+
+        }
+
+        </tbody>
+
+    </table>
+</div>

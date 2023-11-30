@@ -2,10 +2,10 @@
 
 namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
 {
-    public class OrganizationContractVM
+    public class OrganizationDogovorVM
     {
         public Organization Organization { get; set; }
-        public Contract Contract { get; set; }
+        public Dogovor Dogovor { get; set; }
 
     }
 }

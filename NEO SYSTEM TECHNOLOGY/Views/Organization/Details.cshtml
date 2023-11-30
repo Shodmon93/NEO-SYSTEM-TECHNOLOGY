@@ -11,7 +11,6 @@
     }
 
     .classname {
-       
         display: block;
         width: 150px;
         height: 150px;
@@ -22,8 +21,8 @@
 <div class="bg-blue">
 
     <h2>@Model.Name</h2>
-   
-        <ol>
+
+    <ol>
         @foreach (var person in Model.Person)
         {
             <li style="padding: 5px">
@@ -35,9 +34,9 @@
             </li>
         }
 
-        </ol>
+    </ol>
 </div>
 <div style="padding: 25px">
-    @Html.ActionLink("Разовой Договор", "AddNewContract", "Contract", new {id = Model.ID}, new { @class = "btn btn-default btn-outline-primary"})
-    @Html.ActionLink("Рамочный Договор", "AddNewContract", "Contract", new {id = Model.ID}, new { @class = "btn btn-default btn-outline-primary"})
+    @Html.ActionLink("Разовой Договор", "AddNewDogovor", "Dogovor", new {id = Model.ID}, new { @class = "btn btn-default btn-outline-primary"})
+    @Html.ActionLink("Рамочный Договор", "AddNewDogovor", "Dogovor", new {id = Model.ID}, new { @class = "btn btn-default btn-outline-primary"})
 </div>

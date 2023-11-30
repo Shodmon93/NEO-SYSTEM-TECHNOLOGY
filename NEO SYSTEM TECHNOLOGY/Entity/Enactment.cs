@@ -7,7 +7,7 @@
         public DateTime EnactmentDate { get; set; }
         public DateTime ExposedNfsDate { get; set; }
 
-        public Contract Contract { get; set; }
+        public Dogovor Contract { get; set; }
         public int ContractID { get; set; }
 
         public Nfs Nfs { get; set; }

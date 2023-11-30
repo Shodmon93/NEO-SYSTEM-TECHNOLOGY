@@ -7,14 +7,14 @@
 }
 
 
-<h2 style="margin: 20px;" >Добавить заказчика</h2>
+<h2 style="margin: 20px;">Добавить заказчика</h2>
 
 @using (Html.BeginForm("Save", "Organization", FormMethod.Post, new { style = "margin: 20px;" }))
 {
 
     <div class="form-group">
         @Html.LabelFor(p => p.Organization.Name, "Название Oрганизации")
-        @Html.TextBoxFor(p => p.Organization.Name, new {@class="form-control text-box", style="width:500px; height:35px"})
+        @Html.TextBoxFor(p => p.Organization.Name, new {@class="form-control text-box", style="width:500px; height:29px"})
         @Html.ValidationMessageFor(p => p.Organization.Name)
     </div>
 
@@ -37,8 +37,8 @@
         @Html.TextBoxFor(p => p.Person.PhoneNumber, new {@class="form-control text-box", style="width:500px; height:29px"})
         @Html.ValidationMessageFor(p => p.Person.PhoneNumber)
 
-    </div>  
-    
+    </div>
+
     <div class="form-group">
         @Html.LabelFor(p => p.Person.Email, "Почтовый адрес заказчика")
         @Html.TextBoxFor(p => p.Person.Email, new {@class="form-control text-box", style="width:500px; height:29px"})
@@ -49,7 +49,7 @@
     @Html.HiddenFor(p => p.Organization.ID)
     @Html.HiddenFor(p => p.Person.ID)
 
-    <button type="submit" class="btn btn-default btn-outline-primary">Save</button>
+    <button type="submit" class="btn btn-default btn-outline-primary" style="margin: 10px 0px; width:200px;">Сохранить</button>
 }
 
 @* @section scripts{
@@ -91,4 +91,4 @@
 
 
 
-     @*    https://www.c-sharpcorner.com/article/creating-dynamic-dropdown-lists-in-asp-net-mvc-using-ajax/ *@
+@*    https://www.c-sharpcorner.com/article/creating-dynamic-dropdown-lists-in-asp-net-mvc-using-ajax/ *@

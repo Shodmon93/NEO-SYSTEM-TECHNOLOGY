@@ -7,7 +7,7 @@
         public DateTime InvoiceDate { get; set; }
         public int InvoiceSum { get; set; }
 
-        public Contract Contract { get; set; }
+        public Dogovor Contract { get; set; }
         public int ContractId { get; set; }
 
     }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NEO_SYSTEM_TECHNOLOGY.Entity.Organization>
+﻿@model IEnumerable<NEO_SYSTEM_TECHNOLOGY.ViewModels.PersonOrganizationVM>
 @{
     ViewBag.Title = "Index";
 
@@ -11,7 +11,7 @@
 </div>
 
 <div>
-    <table class="table table-hover table-bordered center" style="width: 98%; margin-left:auto;margin-right:auto;">
+    <table class="table table-hover table-bordered center" style="width: 98%; margin-left:auto;margin-right:auto;" id="orgTable">
         <thead>
             <tr>
                 <th>Организация</th>
@@ -27,26 +27,27 @@
             {
                 <tr>
                     <td style='vertical-align:middle'>
-
-                        @Html.ActionLink(item.Name,"Details","Organization", new {id = item.ID},  new {@style="text-decoration:none; color: black"})
+                        @Html.ActionLink(item.OrganizationName,"Details","Organization", new {organizationId = item.OrganizationID},  new {@style="text-decoration:none; color: black"})
                     </td>
+
                     <td>
-                        @foreach (var entity in item.Person)
+                        @foreach (var entity in item.People)
                         {
                             <p>@entity.FirstName @entity.LastName<br /></p>
                         }
                     </td>
+
                     <td>
-                        @foreach (var entity in item.Person)
+                        @foreach (var entity in item.People)
                         {
                             <p>@entity.PhoneNumber<br /></p>
                         }
                     </td>
+
                     <td>
-                        @foreach (var entity in item.Person)
+                        @foreach (var entity in item.People)
                         {
                             <p>@entity.Email<br /></p>
-
                         }
                     </td>
                 </tr>

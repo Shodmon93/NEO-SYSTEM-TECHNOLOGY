@@ -1,0 +1,66 @@
+﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.OrganizationDogovorVM
+
+<style>
+    .container{
+        margin: 20px auto;
+        padding-bottom: 80px;       
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;       
+    }
+
+    h3 {
+        text-align: center;
+        color: #666;
+    }
+
+    .global {
+        display: flex;
+    }
+    .container #child{
+        float: left;
+        width: 100%;
+
+    }
+    .container #child div{
+        float: left;
+    }
+
+    .parent{
+        margin: px
+    }
+
+    .child {
+        display: inline-block;
+        vertical-align: middle;
+    }
+</style>
+
+<div class="container">
+    <h3>@Model.OrganizationName</h3>
+
+    <div class='parent'>
+        <div class='child'>
+            <p><b>Номер Контракта:&nbsp;</b></p>
+            <p><b>Дата Контракта:&nbsp;</b></p>
+            <p><b>Дата окончания контракта:&nbsp;</b></p>
+            <p><b>Сумма контракта :&nbsp;</b></p>
+        </div>
+
+        <div class='child'>
+            <p>@Model.OrderHeader</p>
+            <p>@Model.StartDate.ToString("dd MMMM yyyy")</p>
+            <p>@Model.EndDate.ToString("dd MMMM yyyy")</p>
+            <p>@Model.DogovorSum @Model.Currency</p>
+        </div>
+    </div>
+
+    <div>
+        @Html.ActionLink("Выставить Счет", "AddNewReceipt", "Receipt", new { dogovorId = Model.DogovorId }, new { @class = "btn btn-default btn-outline-primary" })
+    </div>
+   
+</div>
+
+
+
+

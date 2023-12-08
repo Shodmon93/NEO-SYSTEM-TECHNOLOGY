@@ -1,0 +1,69 @@
+﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.DogovorReceiptVM
+@using NEO_SYSTEM_TECHNOLOGY.Entity.Enum
+
+
+
+@using (Html.BeginForm("Save", "Receipt", FormMethod.Post, new { style = "margin: 20px;", enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+    ;
+
+    <div style="margin: 0px 5px;">
+        <h2>@Model.OrgName</h2>
+    </div>
+    <div style="margin: 0px 5px;">
+        <h2>@Model.Order</h2>
+    </div>
+
+    <div class="form-group" style="margin: 15px 15px">
+        @Html.LabelFor(p => p.AccountNumber, new { style = "margin: 0px 5px;" })
+        @Html.TextBoxFor(p => p.AccountNumber, new { @class = "form-control text-box js-box", style = "width:500px; height:35px" })
+    </div>
+
+    <div class="form-group" style="margin:15px 15px">
+        @Html.LabelFor(p => p.AmountFaceValue, new { style = "margin: 0px 5px;" })
+        @Html.TextBoxFor(p => p.AmountFaceValue, new { @class = "form-control text-box js-box", style = "width:500px; height:35px" })
+    </div>
+
+    <div class="checkbox" style="margin: 15px 0px">
+        <label>
+            @Html.CheckBoxFor(p => p.IsVatIncluded, new { style = "width:50px; height:20px" }) НДС 15%
+        </label>
+    </div>
+
+    <div class="form-group" style="margin: 15px 15px">
+        @Html.LabelFor(p => p.PaymentSum, new { style = "margin: 0px 5px;" })
+        @Html.TextBoxFor(p => p.PaymentSum, new { @class = "form-control text-box", style = "width:500px; height:35px" })
+    </div>
+
+    <div class="form-group" style="margin:15px 15px">
+        @Html.LabelFor(p => p.DateFaceValue, new { style = "margin: 0px 5px;" })
+        @Html.TextBoxFor(p => p.DateFaceValue, new { @class = "form-control text-box", style = "width:500px; height:35px" })
+    </div>
+
+    <div class="form-group" style="margin:15px 15px">
+        @Html.LabelFor(p => p.PaymentDate, new { style = "margin: 0px 5px;" })
+        @Html.TextBoxFor(p => p.PaymentDate, new { @class = "form-control text-box", style = "width:500px; height:35px" })
+    </div>
+
+    <div class="form-group" style="margin:15px 15px">
+        @Html.LabelFor(p => p.Currency, new { style = "margin: 0px 5px;" })
+        @Html.DropDownListFor(p => p.Currency, Html.GetEnumSelectList<Currency>(), "Выберите валюту", new { @class = "form-control text-box", style = "width:500px; height:35px" })
+    </div>
+
+    <div class="form-group" style="margin:15px 15px">      
+            <dl>
+                <dt>
+                    <label asp-for="@Model.FormFile" class="control-label"></label>
+                </dt>
+                <dd>
+                <input asp-for="@Model.FormFile" type="file" class="file-input">
+                </dd>
+            </dl>
+    </div>
+
+    @Html.HiddenFor(p => p.OrgName)
+    @Html.HiddenFor(p => p.DogovorId)
+
+    <button type="submit" class="btn btn-default btn-outline-primary" style="margin: 10px 20px; width:200px;">Сохранить</button>
+}

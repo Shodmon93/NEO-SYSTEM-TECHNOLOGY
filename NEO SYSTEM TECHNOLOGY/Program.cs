@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NEO_SYSTEM_TECHNOLOGY.Data;
+using System.Globalization;
 
 namespace NEO_SYSTEM_TECHNOLOGY
 {
@@ -13,6 +14,13 @@ namespace NEO_SYSTEM_TECHNOLOGY
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("ru-RU");
+                options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-US"), new CultureInfo("ru-RU") };
+                options.RequestCultureProviders.Clear();
+            });
 
             builder.Services.AddDbContext<ApplicationDbContext>(opt =>
             opt.UseSqlServer(connectionString));
@@ -34,6 +42,7 @@ namespace NEO_SYSTEM_TECHNOLOGY
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseRequestLocalization();
 
             app.UseRouting();
 
@@ -41,7 +50,7 @@ namespace NEO_SYSTEM_TECHNOLOGY
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Organization}/{action=Create}/{id?}");
+                pattern: "{controller=Organization}/{action=Index}/{id?}");
 
             app.Run();
         }

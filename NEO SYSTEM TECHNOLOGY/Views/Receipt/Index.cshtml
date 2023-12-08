@@ -1,0 +1,32 @@
+﻿@model IEnumerable<NEO_SYSTEM_TECHNOLOGY.Entity.Receipt>
+
+  
+
+
+    <div style="margin: 50px">
+        @foreach (var item in Model)
+    {
+
+        var filePath = "/PdfFile/" + item.Content;
+
+        <p>@item.AccountNumber</p>
+        <p>@item.Dogovor.OrderHeader</p>
+        <p>@item.Dogovor.Organization.Name</p>
+        <embed src="@filePath" type="application/pdf" height="400px" width="40%" class="responsive">
+        <p> <a href="@filePath">Скачать</a></p>
+@* 
+        <embed type="application/pdf"
+               src="@filePath"
+               width="100%" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html"
+               background-color="0xFF525659" top-toolbar-height="56" full-frame="" internalinstanceid="21"
+               title="CHROME"> *@
+
+     @*    <iframe src="@filePath"
+                style="width:600px; height:500px;" frameborder="0"></iframe> *@
+
+      @*   <h1>PDF Example by Object Tag</h1>
+        <object data="@filePath" type="application/pdf" width="100%" height="500px">
+            <p>Unable to display PDF file. <a href="@filePath">Download</a> instead.</p>
+        </object> *@
+    }
+    </div>

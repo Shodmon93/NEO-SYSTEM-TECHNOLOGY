@@ -19,6 +19,13 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
             _context = new ApplicationDbContext();
         }
 
+        public IActionResult Index()
+        {
+            var dogovorList = _context.Dogovors.Include(p => p.Organization).ToList();
+
+            return View(dogovorList);
+        }
+
         public IActionResult AddNewDogovor(int id)
         {
             var organization = _context.Organizations.SingleOrDefault(p => p.ID == id);
@@ -79,12 +86,21 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
             return RedirectToAction("Index", "Dogovor");
         }
 
-        public IActionResult Index()
+        public IActionResult DogovorDetails(int dogovorID)
         {
-            var dogovorList = _context.Dogovors.Include(p => p.Organization).ToList();
-                     
+            var dogovorInDb = _context.Dogovors.Include(p => p.Organization).SingleOrDefault(p => p.ID == dogovorID);
+            OrganizationDogovorVM viewModel = new OrganizationDogovorVM
+            {
+                DogovorId = dogovorInDb.ID,
+                OrderHeader = dogovorInDb.OrderHeader,
+                DogovorSum = dogovorInDb.DogovorSum,
+                Currency = dogovorInDb.Currency,
+                OrganizationName = dogovorInDb.Organization.Name                
+            };
 
-            return View(dogovorList);
+            return View("Details", viewModel);
         }
+
+     
     }
 }

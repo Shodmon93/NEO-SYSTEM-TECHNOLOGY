@@ -12,9 +12,11 @@ namespace NEO_SYSTEM_TECHNOLOGY.Entity
         public int PaymentSum { get; set; }
         public DateTime DateFaceValue { get; set; }
         public DateTime PaymentDate { get; set; }
+        public string Content { get; set; }
 
         public Dogovor Dogovor { get; set; }
         public int DogovorId { get; set; }
+
 
     }
 }

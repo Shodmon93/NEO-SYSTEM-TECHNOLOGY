@@ -2,7 +2,7 @@
 
 namespace NEO_SYSTEM_TECHNOLOGY.Entity
 {
-    public class Person
+    public class Employee
     {
         public int ID { get; set; }
         [Required]

@@ -13,34 +13,34 @@
 {
 
     <div class="form-group">
-        @Html.LabelFor(p => p.OrganizationName, "Название Oрганизации")
+        @Html.LabelFor(p => p.OrganizationName)
         @Html.TextBoxFor(p => p.OrganizationName, new {@class="form-control text-box", style="width:500px; height:29px"})
         @Html.ValidationMessageFor(p => p.OrganizationName)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(p => p.CustFirstName, "Имя Заказчика")
+        @Html.LabelFor(p => p.CustFirstName)
         @Html.TextBoxFor(p => p.CustFirstName, new {@class="form-control text-box js-box", style="width:500px; height:29px"})
         @Html.ValidationMessageFor(p => p.CustFirstName)
 
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(p => p.CustLastName, "Фамилия Заказчика")
+        @Html.LabelFor(p => p.CustLastName)
         @Html.TextBoxFor(p => p.CustLastName, new { @class = "form-control text-box js-box", style = "width:500px; height:29px" })
         @Html.ValidationMessageFor(p => p.CustLastName)
 
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(p => p.CustPhoneNumber, "Телефон Заказчика")
+        @Html.LabelFor(p => p.CustPhoneNumber)
         @Html.TextBoxFor(p => p.CustPhoneNumber, new {@class="form-control text-box", style="width:500px; height:29px"})
         @Html.ValidationMessageFor(p => p.CustPhoneNumber)
 
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(p => p.CustEmail, "Почтовый адрес заказчика")
+        @Html.LabelFor(p => p.CustEmail)
         @Html.TextBoxFor(p => p.CustEmail, new {@class="form-control text-box", style="width:500px; height:29px"})
         @Html.ValidationMessageFor(p => p.CustEmail)
 
@@ -48,7 +48,6 @@
 
     @Html.HiddenFor(p => p.OrganizationID)
     @Html.HiddenFor(p => p.PersonID)
-
     <button type="submit" class="btn btn-default btn-outline-primary" style="margin: 10px 0px; width:200px;">Сохранить</button>
 }
 

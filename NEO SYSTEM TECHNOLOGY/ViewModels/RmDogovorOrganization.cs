@@ -1,16 +1,15 @@
-﻿using NEO_SYSTEM_TECHNOLOGY.Data;
-using NEO_SYSTEM_TECHNOLOGY.Entity;
+﻿using NEO_SYSTEM_TECHNOLOGY.Entity;
 using NEO_SYSTEM_TECHNOLOGY.Entity.Enum;
 using System.ComponentModel.DataAnnotations;
 
 namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
 {
-    public class OrganizationDogovorVM
+    public class RmDogovorOrganization
     {
         public int DogovorId { get; set; }
-        [Display(Name = "Договор")]
+        public int OrganizationId { get; set; }
+        public int ZakazId { get; set; }
         public string OrderHeader { get; set; }
-
         [Display(Name = "Сумма Договора")]
         public decimal DogovorSum { get; set; }
 
@@ -22,17 +21,16 @@ namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
         public Currency Currency { get; set; }
 
         [Display(Name = "Валюта")]
-        public bool IsVatIncluded { get; set; }
+        public bool IsVatIncluded { get; set; } = false;
 
-
-        public Receipt Receipt { get; set; }
-        public Organization Organization { get; set; }
-        public Dogovor Dogovor { get; set; }
         public string OrganizationName { get; set; }
-        public int OrganizationId { get; set; }
+
+        [Display(Name = "Номер Заказа")]
+        public int OrderNumber { get; set; }
 
         public bool IsOneTimeDogovor { get; set; }
 
-
+        public ICollection<Zakaz> Orders {  get; set; }
     }
+
 }

@@ -1,0 +1,61 @@
+﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.RmDogovorOrganization
+@using NEO_SYSTEM_TECHNOLOGY.Entity.Enum
+
+@{
+    
+}
+<h3 style="margin: 0px 25px;">Составить Рамочный Договор</h3>
+
+@using (Html.BeginForm("RmDogovorSave", "Dogovor", FormMethod.Post, new { style = "margin: 20px;" }))
+{
+    @Html.ValidationSummary()
+    ;
+
+    <div style="margin: 0px 5px;">
+        <h2>@Model.OrganizationName</h2>
+    </div>
+
+
+
+    <div class="form-group" style="margin: 15px 15px">
+        @Html.LabelFor(p => p.OrderHeader, new { style = "margin: 0px 5px;" })
+        @Html.TextBoxFor(p => p.OrderHeader, new { @class = "form-control text-box js-box", style = "width:500px; height:35px" })
+    </div>
+
+    <div class="form-group" style="margin: 15px 15px">
+        @Html.LabelFor(p => p.OrderNumber, new { style = "margin: 0px 5px;" })
+        @Html.TextBoxFor(p => p.OrderNumber, new { @class = "form-control text-box js-box", style = "width:500px; height:35px" })
+    </div>
+
+    <div class="form-group" style="margin:15px 15px">
+        @Html.LabelFor(p => p.DogovorSum, new { style = "margin: 0px 5px;" })
+        @Html.TextBoxFor(p => p.DogovorSum, new { @class = "form-control text-box js-box", style = "width:500px; height:35px" })
+    </div>
+
+    <div class="checkbox" style="margin: 15px 0px">
+        <label>
+            @Html.CheckBoxFor(p => p.IsVatIncluded, new { style = "width:50px; height:20px" }) НДС 15%
+        </label>
+    </div>
+
+    <div class="form-group" style="margin: 15px 15px">
+        @Html.LabelFor(p => p.StartDate, new { style = "margin: 0px 5px;" })
+        @Html.TextBoxFor(p => p.StartDate, new { @class = "form-control text-box", style = "width:500px; height:35px" })
+    </div>
+
+    <div class="form-group" style="margin:15px 15px">
+        @Html.LabelFor(p => p.EndDate, new { style = "margin: 0px 5px;" })
+        @Html.TextBoxFor(p => p.EndDate, new { @class = "form-control text-box", style = "width:500px; height:35px" })
+    </div>
+
+    <div class="form-group" style="margin:15px 15px">
+        @Html.LabelFor(p => p.Currency, new { style = "margin: 0px 5px;" })
+        @Html.DropDownListFor(p => p.Currency, Html.GetEnumSelectList<Currency>(), "Выберите валюту", new { @class = "form-control text-box", style = "width:500px; height:35px" })
+    </div>
+
+    @Html.HiddenFor(p => p.OrganizationId)
+    @Html.HiddenFor(p => p.OrganizationName)
+    @Html.HiddenFor(p => p.IsOneTimeDogovor)
+
+    <button type="submit" class="btn btn-default btn-outline-primary" style="margin: 10px 20px; width:200px;">Сохранить</button>
+}

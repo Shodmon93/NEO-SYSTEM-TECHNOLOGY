@@ -16,26 +16,83 @@
         height: 150px;
         text-indent: -9999px; /* hides the link text */
     }
+
+    /* Target table headers and make their lines bold */
+    .table th {
+        border: 1px solid black; /* Set border properties */
+        font-weight: bold; /* Make table headers bold */
+        padding: 8px;
+        text-align: center;
+    }
+
+    .table td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+
+    .organization-details {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .organization-name {
+        text-align: right; /* Align organization name to the right */
+        margin-bottom: 20px; /* Adjust space between organization name and employees */
+    }
+
+    .employees {
+        width: 100%; /* Occupy full width */
+        overflow-x: auto;
+    }
+
+    .organization-details {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+
 </style>
 
+
 <div class="bg-blue">
+    <div class="organization-details">
+        <div class="organization-name">
+            <h2 style="font-size: 20px; display: inline-block; border-bottom: 1px solid #000;">@Html.DisplayName(Model.OrganizationName)</h2>
+        </div>
 
-    <h2>@Model.OrganizationName</h2>
+        <div class="employees">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Контактное лицо</th>
+                        <th>Номер Телефона</th>
+                        <th>Почта</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var employee in Model.Employees)
+                    {
+                        <tr onclick="location.href='@Url.Action("Edit", "Organization", new { id = employee.ID })';" style="cursor: pointer;">
+                            <td>@employee.FirstName @employee.LastName</td>
+                            <td>@employee.PhoneNumber</td>
+                            <td>@employee.Email</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <ol>
-        @foreach (var person in Model.People)
-        {
-            <li style="padding: 5px">
-                <b>@person.FirstName @person.LastName</b>
-                <br>
-                <b>Номер Телефона:</b> @person.PhoneNumber
-                <br>
-                <b>Почта:</b> @person.Email
-            </li>
-        }
-    </ol>
+    @Html.ActionLink("Удалить", "Delete", "Organization", new { orgId = Model.OrganizationID }, new { @class = "btn btn-default btn-outline-primary" })
+
 </div>
+   
+
 <div style="padding: 25px">
-    @Html.ActionLink("Разовой Договор", "AddNewDogovor", "Dogovor", new {id = Model.OrganizationID}, new { @class = "btn btn-default btn-outline-primary"})
-    @Html.ActionLink("Рамочный Договор", "AddNewDogovor", "Dogovor", new {id = Model.OrganizationID}, new { @class = "btn btn-default btn-outline-primary"})
+    @Html.ActionLink("Разовой Договор", "AddNewDogovor", "Dogovor", new { id = Model.OrganizationID, isOneTimeDogovor = true }, new { @class = "btn btn-default btn-outline-primary" })
+    @Html.ActionLink("Рамочный Договор", "AddNewDogovor", "Dogovor", new { id = Model.OrganizationID, isOneTimeDogovor = false }, new { @class = "btn btn-default btn-outline-primary" })
 </div>
+
+

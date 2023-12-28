@@ -12,8 +12,8 @@ using NEO_SYSTEM_TECHNOLOGY.Data;
 namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231122123245_AddedContractClassToDbSet")]
-    partial class AddedContractClassToDbSet
+    [Migration("20231214045019_DeleteZakazFromDbContext")]
+    partial class DeleteZakazFromDbContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Contract", b =>
+            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Dogovor", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -32,32 +32,32 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int>("ContractSum")
-                        .HasColumnType("int");
-
                     b.Property<int>("Currency")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("DogovorSum")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<bool>("IsVatIncluded")
                         .HasColumnType("bit");
 
-                    b.Property<int>("OrderNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("OrderHeader")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("OrganizationID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.HasKey("ID");
 
                     b.HasIndex("OrganizationID");
 
-                    b.ToTable("Contracts");
+                    b.ToTable("Dogovors");
                 });
 
             modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Organization", b =>
@@ -69,6 +69,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -85,18 +86,22 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrganizationID")
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -106,10 +111,53 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Contract", b =>
+            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Receipt", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<int>("AccountNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AmountFaceValue")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Currency")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateFaceValue")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DogovorId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsVatIncluded")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PaymentSum")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("DogovorId")
+                        .IsUnique();
+
+                    b.ToTable("Receipts");
+                });
+
+            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Dogovor", b =>
                 {
                     b.HasOne("NEO_SYSTEM_TECHNOLOGY.Entity.Organization", "Organization")
-                        .WithMany("Contracts")
+                        .WithMany("Dogovors")
                         .HasForeignKey("OrganizationID");
 
                     b.Navigation("Organization");
@@ -126,9 +174,25 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
                     b.Navigation("Organization");
                 });
 
+            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Receipt", b =>
+                {
+                    b.HasOne("NEO_SYSTEM_TECHNOLOGY.Entity.Dogovor", "Dogovor")
+                        .WithOne("Receipt")
+                        .HasForeignKey("NEO_SYSTEM_TECHNOLOGY.Entity.Receipt", "DogovorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dogovor");
+                });
+
+            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Dogovor", b =>
+                {
+                    b.Navigation("Receipt");
+                });
+
             modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Organization", b =>
                 {
-                    b.Navigation("Contracts");
+                    b.Navigation("Dogovors");
 
                     b.Navigation("Employee");
                 });

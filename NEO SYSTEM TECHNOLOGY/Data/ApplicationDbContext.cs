@@ -7,9 +7,10 @@ namespace NEO_SYSTEM_TECHNOLOGY.Data
     {
 
         public DbSet<Organization> Organizations { get; set; }
-        public DbSet<Person> People { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<Dogovor> Dogovors { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
+        public DbSet<Zakaz> Zakazi { get; set; }
 
         public ApplicationDbContext()
         {
@@ -36,7 +37,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Data
                 .IsRequired();
 
 
-            modelBuilder.Entity<Person>()
+            modelBuilder.Entity<Employee>()
                 .HasOne(p => p.Organization)
                 .WithMany(p => p.Person)
                 .HasForeignKey(p => p.OrganizationID)
@@ -54,6 +55,18 @@ namespace NEO_SYSTEM_TECHNOLOGY.Data
                 .HasOne(p => p.Receipt)
                 .WithOne(p => p.Dogovor)
                 .HasForeignKey<Receipt>(p => p.DogovorId);
+
+            modelBuilder.Entity<Dogovor>()
+                .HasMany(p => p.Zakaz)
+                .WithOne(p => p.Dogovor)
+                .HasForeignKey(p => p.ID)
+                .IsRequired();
+
+
+            modelBuilder.Entity<Zakaz>()
+                .HasOne(p => p.Dogovor)
+                .WithMany(p => p.Zakaz)
+                .HasForeignKey(p => p.DogovorId);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Entity
         [Required]
         public string Name { get; set; }
 
-        public ICollection<Person> Person { get; set; } = new List<Person>();
+        public ICollection<Employee> Person { get; set; } = new List<Employee>();
         public ICollection<Dogovor> Dogovors { get; set; } = new List<Dogovor>();
 
 

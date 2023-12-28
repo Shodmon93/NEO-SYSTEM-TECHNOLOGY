@@ -10,7 +10,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
         {
             migrationBuilder.AlterColumn<string>(
                 name: "PhoneNumber",
-                table: "People",
+                table: "Employees",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "",
@@ -20,7 +20,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "LastName",
-                table: "People",
+                table: "Employees",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "",
@@ -30,7 +30,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "FirstName",
-                table: "People",
+                table: "Employees",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "",
@@ -40,7 +40,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Email",
-                table: "People",
+                table: "Employees",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "",
@@ -63,7 +63,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
         {
             migrationBuilder.AlterColumn<string>(
                 name: "PhoneNumber",
-                table: "People",
+                table: "Employees",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
@@ -71,7 +71,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "LastName",
-                table: "People",
+                table: "Employees",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
@@ -79,7 +79,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "FirstName",
-                table: "People",
+                table: "Employees",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
@@ -87,7 +87,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Email",
-                table: "People",
+                table: "Employees",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),

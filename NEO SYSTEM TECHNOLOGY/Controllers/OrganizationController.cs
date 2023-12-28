@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NEO_SYSTEM_TECHNOLOGY.DAL;
 using NEO_SYSTEM_TECHNOLOGY.Data;
 using NEO_SYSTEM_TECHNOLOGY.Entity;
 using NEO_SYSTEM_TECHNOLOGY.ViewModels;
@@ -10,56 +11,93 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
     public class OrganizationController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IOrganizationRepository organizationRepository;
+        private PersonOrganizationVM organizationVM;
 
         public OrganizationController()
         {
             _context = new ApplicationDbContext();
+            this.organizationRepository = new OrganizationRepository(new ApplicationDbContext());
+            this.organizationVM = new PersonOrganizationVM();
         }
 
-        public IActionResult Index()
+        public IActionResult Index ()
         {
-            var organization = _context.Organizations.Include(p => p.Person).ToList();
-            PersonOrganizationVM result = new PersonOrganizationVM();
-            var organizationList = result.GetPersonOrganizationList(organization);
+            var organizationsInDb = organizationRepository.GetAllOrganization();
+            var organizations = organizationVM.GetPersonOrganizationList(organizationsInDb);
 
-            return View(organizationList);
+            return View(organizations);
         }
-
+        
         public IActionResult Create()
         {
-            var viewModel = new PersonOrganizationVM();
+            return View("PersonOrgForm", organizationVM);
+        }
 
-            return View("PersonOrgForm", viewModel);
-        }       
+        public IActionResult Edit(int id)
+        {
+            var person = _context.Employees.Include(p => p.Organization).SingleOrDefault(p => p.ID == id);
 
-        public IActionResult Save(PersonOrganizationVM result)
+            organizationVM = new PersonOrganizationVM
+            {
+                OrganizationID = person.Organization.ID,
+                OrganizationName = person.Organization.Name,
+                CustFirstName = person.FirstName,
+                CustLastName = person.LastName,
+                CustPhoneNumber = person.PhoneNumber,
+                CustEmail = person.Email,
+                PersonID = person.ID,
+            };
+
+            return View("PersonEditForm", organizationVM);
+        }
+
+        public IActionResult Delete(int? orgId, int? personId)
+        {
+            if(orgId != null && orgId != 0)
+            {
+                var organizationInDb = _context.Organizations.Include(p => p.Person).Include(p => p.Dogovors).SingleOrDefault(p => p.ID == orgId);
+                _context.Organizations.Remove(organizationInDb);
+            }
+            
+            if  (personId != null && personId != 0)
+            {
+                var personInDb = _context.Employees.SingleOrDefault(p => p.ID == personId);
+                _context.Employees.Remove(personInDb);
+            }
+
+
+            
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Organization");
+        }
+
+        public IActionResult Save(PersonOrganizationVM formData)
         {
             if (!ModelState.IsValid)
             {
-                var viewModel = result;
-                return View("PersonOrgForm", viewModel);
+                organizationVM = formData;
+                return View("PersonOrgForm", organizationVM);
             }
 
-            if (result.OrganizationID == 0)
+
+            if (formData.OrganizationID == 0)
             {
-                PersonOrganizationVM viewModel = new PersonOrganizationVM();
-                var organization = viewModel.AddNewOrganization(result);
-                _context.Organizations.Add(organization);
+                var organization = organizationVM.AddNewOrganization(formData);
+                organizationRepository.InsertOrganization(organization);
+                organizationRepository.Save();
             }
             else
             {
-                var organizationInDb = _context.Organizations.Include(p => p.Person).Single(p => p.ID == result.OrganizationID);
-                organizationInDb.Name = result.OrganizationName;
-                organizationInDb.Person = new List<Person>()
-                {
-                    new Person()
-                    {
-                        FirstName = result.CustFirstName,
-                        LastName = result.CustLastName,
-                        PhoneNumber = result.CustPhoneNumber,
-                        Email = result.CustEmail,
-                    }
-                };
+                var organizationInDb = _context.Organizations.Include(p => p.Person).Single(p => p.ID == formData.OrganizationID);
+                var person = organizationInDb.Person.SingleOrDefault(p => p.ID == formData.PersonID);
+
+                organizationInDb.Name = formData.OrganizationName;
+                person.FirstName = formData.CustFirstName;
+                person.LastName = formData.CustLastName;
+                person.PhoneNumber = formData.CustPhoneNumber;
+                person.Email = formData.CustEmail;
             }
             _context.SaveChanges();
             return RedirectToAction("Index", "Organization");

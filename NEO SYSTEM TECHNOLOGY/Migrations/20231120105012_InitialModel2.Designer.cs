@@ -39,7 +39,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
                     b.ToTable("Organizations");
                 });
 
-            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Person", b =>
+            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Employee", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -66,13 +66,13 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 
                     b.HasIndex("OrganizationID");
 
-                    b.ToTable("People");
+                    b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Person", b =>
+            modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Employee", b =>
                 {
                     b.HasOne("NEO_SYSTEM_TECHNOLOGY.Entity.Organization", "Organization")
-                        .WithMany("Person")
+                        .WithMany("Employee")
                         .HasForeignKey("OrganizationID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -82,7 +82,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 
             modelBuilder.Entity("NEO_SYSTEM_TECHNOLOGY.Entity.Organization", b =>
                 {
-                    b.Navigation("Person");
+                    b.Navigation("Employee");
                 });
 #pragma warning restore 612, 618
         }

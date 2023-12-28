@@ -1,12 +1,12 @@
-﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.OrganizationDogovorVM
+﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.RmDogovorOrganization
 
 <style>
-    .container{
+    .container {
         margin: 20px auto;
-        padding-bottom: 80px;       
+        padding-bottom: 80px;
         background-size: cover;
         background-position: center;
-        background-repeat: no-repeat;       
+        background-repeat: no-repeat;
     }
 
     h3 {
@@ -17,16 +17,17 @@
     .global {
         display: flex;
     }
-    .container #child{
+
+    .container #child {
         float: left;
         width: 100%;
-
-    }
-    .container #child div{
-        float: left;
     }
 
-    .parent{
+        .container #child div {
+            float: left;
+        }
+
+    .parent {
         margin: px
     }
 
@@ -56,12 +57,7 @@
     </div>
 
     <div>
-        @Html.ActionLink("Выставить Счет", "AddNewReceipt", "Receipt", new { dogovorId = Model.DogovorId }, new { @class = "btn btn-default btn-outline-primary" })
-        @Html.ActionLink("Изменить Контракт", "EditDogovor", "Dogovor", new { id = Model.DogovorId }, new { @class = "btn btn-default btn-outline-primary" })
+        @Html.ActionLink("Добавить Новый Заказ", "EditDogovor", "Dogovor", new { id = Model.DogovorId }, new { @class = "btn btn-default btn-outline-primary" })
     </div>
-   
+
 </div>
-
-
-
-

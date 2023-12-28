@@ -22,7 +22,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "People",
+                name: "Employees",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -46,14 +46,14 @@ namespace NEO_SYSTEM_TECHNOLOGY.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_People_OrganizationID",
-                table: "People",
+                table: "Employees",
                 column: "OrganizationID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "People");
+                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "Organizations");

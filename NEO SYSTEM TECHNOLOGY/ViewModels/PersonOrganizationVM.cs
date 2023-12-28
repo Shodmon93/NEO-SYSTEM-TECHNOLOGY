@@ -1,31 +1,50 @@
 ﻿using NEO_SYSTEM_TECHNOLOGY.Entity;
+using System.ComponentModel.DataAnnotations;
 
 namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
 {
     public class PersonOrganizationVM
     {
-        public int OrganizationID { get; set; }
+        [Display(Name = "Название Oрганизации")]
+        [Required]
         public string OrganizationName { get; set; }
-        public int PersonID { get; set; }
+
+        [Display(Name = "Имя Заказчика")]
+        [Required]
         public string CustFirstName { get; set; }
+
+        [Display(Name = "Фамилия Заказчика")]
+        [Required]
         public string CustLastName { get; set; }
-        public string CustFullName { get; set; }
+
+        [Display(Name = "Телефон Заказчика")]
+        [Required]
         public string CustPhoneNumber { get; set; }
+
+        [Display(Name = "Почтовый адрес заказчика")]
+        [Required]
         public string CustEmail { get; set; }
-        public ICollection<Person> People { get; set; }
-        public IFormFile formFile { get; set; }
 
 
-        public List<PersonOrganizationVM> GetPersonOrganizationList(List<Organization> organization)
+        public int OrganizationID { get; set; }
+        public int PersonID { get; set; }
+        public string CustFullName { get; set; }
+        public ICollection<Employee> Employees { get; set; }
+        public IFormFile FormFile { get; set; }
+
+
+
+
+        public List<PersonOrganizationVM> GetPersonOrganizationList(IEnumerable<Organization> organization)
         {
             List<PersonOrganizationVM> result = new List<PersonOrganizationVM>();
-            foreach (var item in organization)
+            foreach (var entity in organization)
             {
                 result.Add(new PersonOrganizationVM
                 {
-                    OrganizationID = item.ID,
-                    OrganizationName = item.Name,
-                    People = item.Person
+                    OrganizationID = entity.ID,
+                    OrganizationName = entity.Name,
+                    Employees = entity.Person
                 });
             }
             return result;
@@ -36,7 +55,8 @@ namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
             PersonOrganizationVM result = new PersonOrganizationVM
             {
                 OrganizationName = organization.Name,
-                People = organization.Person
+                OrganizationID = organization.ID,
+                Employees = organization.Person
             };
             return result;
         }
@@ -46,9 +66,9 @@ namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
             Organization organization = new Organization()
             {
                 Name = newOrganization.OrganizationName,
-                Person = new List<Person>
+                Person = new List<Employee>
                     {
-                    new Person
+                    new Employee
                         {
                         FirstName = newOrganization.CustFirstName,
                         LastName = newOrganization.CustLastName,
@@ -62,6 +82,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
 
         public Organization EditOrganization(Organization organization)
         {
+
             return organization;
         }
     }

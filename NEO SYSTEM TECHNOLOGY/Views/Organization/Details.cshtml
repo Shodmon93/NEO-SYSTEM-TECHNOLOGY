@@ -74,7 +74,7 @@
                 <tbody>
                     @foreach (var employee in Model.Employees)
                     {
-                        <tr onclick="location.href='@Url.Action("Edit", "Organization", new { id = employee.ID })';" style="cursor: pointer;">
+                        <tr onclick="location.href='@Url.Action("EditEmployee", "Employee", new { employeeId = employee.ID })';" style="cursor: pointer;">
                             <td>@employee.FirstName @employee.LastName</td>
                             <td>@employee.PhoneNumber</td>
                             <td>@employee.Email</td>
@@ -86,6 +86,7 @@
     </div>
 
     @Html.ActionLink("Удалить", "Delete", "Organization", new { orgId = Model.OrganizationID }, new { @class = "btn btn-default btn-outline-primary" })
+    @Html.ActionLink("Добавить", "AddNewEmployee", "Employee", new { organizationId = Model.OrganizationID }, new { @class = "btn btn-default btn-outline-primary" })
 
 </div>
    

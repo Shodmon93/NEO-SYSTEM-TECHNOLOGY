@@ -32,6 +32,14 @@ namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
         public ICollection<Employee> Employees { get; set; }
         public IFormFile FormFile { get; set; }
 
+        public string Title
+        {
+            get
+            {
+                return PersonID != 0 ? "Изменить заказчика" : "Добавить заказчика"; 
+            }
+        }
+
 
 
 
@@ -80,10 +88,45 @@ namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
             return organization;
         }
 
-        public Organization EditOrganization(Organization organization)
+        public Organization EditOrganization(Organization organizationInDb, PersonOrganizationVM updatedOrganization)
         {
+            organizationInDb.Name = updatedOrganization.OrganizationName;
 
-            return organization;
+            return organizationInDb;
+        }
+
+        public Employee AddNewEmployee(PersonOrganizationVM employeeToInsert, Organization organization)
+        {
+            Employee employee = new Employee
+            {
+                FirstName = employeeToInsert.CustFirstName,
+                LastName = employeeToInsert.CustLastName,
+                PhoneNumber = employeeToInsert.CustPhoneNumber,
+                Email = employeeToInsert.CustEmail,
+                Organization = organization
+            };
+
+            return employee;
+        } 
+        public void EditEmployee(Employee employee, Organization organization)
+        {
+            PersonID = employee.ID;
+            CustFirstName = employee.FirstName;
+            CustLastName = employee.LastName;
+            CustPhoneNumber = employee.PhoneNumber;
+            CustEmail = employee.Email;
+            OrganizationID = organization.ID;
+            OrganizationName = organization.Name;
+        }
+
+        public Employee EditEmployee(PersonOrganizationVM updatedEmployee, Employee employeeToUpdate)
+        {
+            employeeToUpdate.FirstName = updatedEmployee.CustFirstName;
+            employeeToUpdate.LastName = updatedEmployee.CustLastName;
+            employeeToUpdate.PhoneNumber = updatedEmployee.CustPhoneNumber;
+            employeeToUpdate.Email = updatedEmployee.CustEmail;
+
+            return employeeToUpdate;
         }
     }
 }

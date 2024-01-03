@@ -57,7 +57,7 @@
 
     <div>
         @Html.ActionLink("Выставить Счет", "AddNewReceipt", "Receipt", new { dogovorId = Model.DogovorId }, new { @class = "btn btn-default btn-outline-primary" })
-        @Html.ActionLink("Изменить Контракт", "EditDogovor", "Dogovor", new { id = Model.DogovorId }, new { @class = "btn btn-default btn-outline-primary" })
+        @Html.ActionLink("Изменить Контракт", "EditDogovor", "Dogovor", new { dogovorID = Model.DogovorId }, new { @class = "btn btn-default btn-outline-primary" })
     </div>
    
 </div>

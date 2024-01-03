@@ -92,8 +92,8 @@
    
 
 <div style="padding: 25px">
-    @Html.ActionLink("Разовой Договор", "AddNewDogovor", "Dogovor", new { id = Model.OrganizationID, isOneTimeDogovor = true }, new { @class = "btn btn-default btn-outline-primary" })
-    @Html.ActionLink("Рамочный Договор", "AddNewDogovor", "Dogovor", new { id = Model.OrganizationID, isOneTimeDogovor = false }, new { @class = "btn btn-default btn-outline-primary" })
+    @Html.ActionLink("Разовой Договор", "AddNewDogovor", "Dogovor", new { organizationId = Model.OrganizationID, isOneTimeDogovor = true }, new { @class = "btn btn-default btn-outline-primary" })
+    @Html.ActionLink("Рамочный Договор", "AddNewDogovor", "Dogovor", new { organizationId = Model.OrganizationID, isOneTimeDogovor = false }, new { @class = "btn btn-default btn-outline-primary" })
 </div>
 
 

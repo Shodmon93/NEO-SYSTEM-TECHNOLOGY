@@ -5,8 +5,7 @@
 
 @using (Html.BeginForm("Save", "Dogovor", FormMethod.Post, new { style = "margin: 20px;" }))
 {
-    @Html.ValidationSummary()
-    ;
+    @Html.ValidationSummary();
 
     <div style="margin: 0px 5px;">
         <h2>@Model.OrganizationName</h2>

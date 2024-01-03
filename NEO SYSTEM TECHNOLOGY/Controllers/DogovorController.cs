@@ -1,159 +1,103 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NEO_SYSTEM_TECHNOLOGY.Controllers.GeneralController;
+using NEO_SYSTEM_TECHNOLOGY.DAL;
 using NEO_SYSTEM_TECHNOLOGY.Data;
 using NEO_SYSTEM_TECHNOLOGY.Entity;
 using NEO_SYSTEM_TECHNOLOGY.ViewModels;
-using System.Collections.Immutable;
 
 
 
 namespace NEO_SYSTEM_TECHNOLOGY.Controllers
 {
-    public class DogovorController : Controller
+    public class DogovorController : BaseController
     {
-      private const decimal TAX = 15;
+        private const decimal TAX = 15;
 
         private readonly ApplicationDbContext _context;
+        private readonly UnitOfWork unitOfWork;
+        private OrganizationDogovorVM _dogovorVM;
+        private RmDogovorOrganization _rmDogovorVM;
 
         public DogovorController()
         {
             _context = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork();
+            _dogovorVM = new OrganizationDogovorVM();
+            _rmDogovorVM = new RmDogovorOrganization();
         }
 
         public IActionResult Index()
         {
-            var dogovorList = _context.Dogovors.Include(p => p.Organization).ToList();
-            List<OrganizationDogovorVM> list = new List<OrganizationDogovorVM>();
+            var dogovorsInDb = unitOfWork.DogovorRepository.GetAll(includeProperties: p => p.Organization);
+            var dogovors = _dogovorVM.GetAllDogovors(dogovorsInDb);
 
-            foreach (var d in dogovorList)
-            {
-                if (d.IsOneTimeDogovor)
-                {
-                    list.Add(new OrganizationDogovorVM
-                    {
-                        OrderHeader = d.OrderHeader,
-                        OrganizationName = d.Organization.Name,
-                        OrganizationId = d.Organization.ID,
-                        StartDate = d.StartDate,
-                        EndDate = d.EndDate,
-                        IsVatIncluded = d.IsVatIncluded,
-                        IsOneTimeDogovor = d.IsOneTimeDogovor,
-                        Currency = d.Currency,
-                        DogovorSum = d.DogovorSum,
-                        DogovorId = d.ID
-
-                    });
-                }
-            }
-
-            return View(list);
+            return View(dogovors);
         }
 
-        public IActionResult AddNewDogovor(int id, bool isOneTimeDogovor)
+        public IActionResult AddNewDogovor(int organizationId, bool isOneTimeDogovor)
         {
-            var organization = _context.Organizations.SingleOrDefault(p => p.ID == id);
-            if (isOneTimeDogovor == true)
+            var organization = unitOfWork.OrganizationRepository.GetByID(organizationId);
+            if (organization == null)
             {
-               
-                var viewModel = new OrganizationDogovorVM()
-                {
-                    OrganizationId = organization.ID,
-                    OrganizationName = organization.Name,
-                    IsOneTimeDogovor = isOneTimeDogovor
-                };
-
-                return View("DogovorForm", viewModel);
-
+                return NotFound();
             }
-            else
-            {
-                var rmViewModel = new RmDogovorOrganization()
-                {
-                    OrganizationId = organization.ID,
-                    OrganizationName = organization.Name,
-                    IsOneTimeDogovor = isOneTimeDogovor
-                };
-                return View("RmDogovorForm", rmViewModel);
-            }
+            var dogovor = _dogovorVM.GetOrganization(organization, isOneTimeDogovor);
+            var rmDogovor = _rmDogovorVM.GetOrganization(organization, isOneTimeDogovor);
 
-           
+            return HandleDogovor(isOneTimeDogovor,
+                () => View("DogovorForm", dogovor),
+                () => View("RmDogovorForm", rmDogovor));
+
         }
-        public IActionResult Save(OrganizationDogovorVM viewModel) 
+        public IActionResult Save(OrganizationDogovorVM viewModel)
         {
-            var organizationInDb = _context.Organizations.Single(p => p.ID == viewModel.OrganizationId);
-
             if (!ModelState.IsValid)
             {
-                var vm = new OrganizationDogovorVM
-                {
-                    Organization = organizationInDb,
-                    Dogovor = viewModel.Dogovor
-                };
-                return View("DogovorForm", vm);
+                return View("DogovorForm", viewModel);
             }
-            var priceWithTax = viewModel.DogovorSum + (viewModel.DogovorSum * ( TAX / 100));
 
+            var organizationInDb = unitOfWork.OrganizationRepository.GetByID(viewModel.OrganizationId);
+            if (organizationInDb == null)
+            {
+                return NotFound();
+            }
             if (viewModel.DogovorId == 0)
             {
-                if (viewModel.IsVatIncluded)
-                {
-                    viewModel.DogovorSum = priceWithTax;
-                }
+                var dogovorToInsert = _dogovorVM.GetDogovorToInsert(viewModel, organizationInDb);
+                unitOfWork.DogovorRepository.Insert(dogovorToInsert);
 
-                Dogovor dogovor = new Dogovor
-                {
-                    OrderHeader = viewModel.OrderHeader,
-                    DogovorSum = viewModel.DogovorSum,
-                    StartDate = viewModel.StartDate,
-                    EndDate = viewModel.EndDate,
-                    Currency = viewModel.Currency,
-                    IsVatIncluded = viewModel.IsVatIncluded,
-                    Organization = organizationInDb,
-                    IsOneTimeDogovor = viewModel.IsOneTimeDogovor,
-                };
-
-                _context.Dogovors.Add(dogovor);
             }
             else
             {
-                var contractInDb = _context.Dogovors.Single(p => p.ID == viewModel.DogovorId);
-                contractInDb.OrderHeader = viewModel.OrderHeader;
-                contractInDb.DogovorSum =  viewModel.DogovorSum;
-                contractInDb.StartDate = viewModel.StartDate;
-                contractInDb.EndDate = viewModel.EndDate;
-                contractInDb.Currency = viewModel.Currency;
-                contractInDb.IsVatIncluded = viewModel.IsVatIncluded;
+                var dogovorInDb = unitOfWork.DogovorRepository.GetByID(viewModel.DogovorId);
+                var dogovorToUpdate = _dogovorVM.GetDogovorToUpdate(dogovorInDb, viewModel);
+                unitOfWork.DogovorRepository.Update(dogovorToUpdate);
             }
-            _context.SaveChanges();
-            
+            unitOfWork.Save();
+
             return RedirectToAction("Index", "Dogovor");
         }
 
-        public IActionResult EditDogovor(int id)
+        public IActionResult EditDogovor(int dogovorID)
         {
-            var dogovorInDb = _context.Dogovors.Include(p => p.Organization).Single(p => p.ID == id);
-            var viewModel = new OrganizationDogovorVM
-            {
-                DogovorId = dogovorInDb.ID,
-                OrganizationId = dogovorInDb.Organization.ID,
-                OrganizationName = dogovorInDb.Organization.Name,
-                OrderHeader = dogovorInDb.OrderHeader,
-                StartDate = dogovorInDb.StartDate,
-                EndDate = dogovorInDb.EndDate,
-                Currency = dogovorInDb.Currency,
-                DogovorSum = dogovorInDb.DogovorSum,
-                IsVatIncluded = dogovorInDb.IsVatIncluded,
+            var dogovorInDb = unitOfWork.DogovorRepository.GetByID(p => p.ID == dogovorID,  includeProperties: p => p.Organization);
+            var dogovor = _dogovorVM.EditDogovor(dogovorInDb);
 
-            };
-            return View("DogovorForm", viewModel);
-            
+            return View("DogovorForm", dogovor);
+
         }
+
+
+
+
+        // To be removed to another namespace for RmDogovorController
 
         public IActionResult RmDogovorIndex()
         {
             var dogovorInDb = _context.Dogovors.Include(p => p.Zakaz).Include(p => p.Organization).ToList();
             RmDogovorOrganization rmDogovor = new RmDogovorOrganization();
-            List<RmDogovorOrganization>  list = new List<RmDogovorOrganization>();
+            List<RmDogovorOrganization> list = new List<RmDogovorOrganization>();
             foreach (var d in dogovorInDb)
             {
                 if (d.IsOneTimeDogovor == false)
@@ -189,13 +133,13 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
                 };
                 return View("DogovorForm", vm);
             }
-            var priceWithTax = rmViewModel.DogovorSum + (rmViewModel.DogovorSum * (TAX / 100));
+ //           var priceWithTax = rmViewModel.DogovorSum + (rmViewModel.DogovorSum * (TAX / 100));
             if (rmViewModel.DogovorId == 0)
             {
-                if (rmViewModel.IsVatIncluded)
-                {
-                    rmViewModel.DogovorSum = priceWithTax;
-                }
+                //if (rmViewModel.IsVatIncluded)
+                //{
+                //    rmViewModel.DogovorSum = priceWithTax;
+                //}
 
                 Dogovor dogovor = new Dogovor
                 {
@@ -242,6 +186,6 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
             return View("Details", viewModel);
         }
 
-     
+
     }
 }

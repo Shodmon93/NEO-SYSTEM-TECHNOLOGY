@@ -5,11 +5,24 @@ namespace NEO_SYSTEM_TECHNOLOGY.DAL
 {
     public class UnitOfWork : IDisposable
     {
-        private ApplicationDbContext context = new ApplicationDbContext();
+        private readonly ApplicationDbContext context = new ApplicationDbContext();
         private GenericRepository<Employee> employeeRepository;
         private GenericRepository<Organization> organizationRepository;
+        private GenericRepository<Dogovor> dogovorRepository;
 
         private bool disposed = false;
+
+        public GenericRepository<Dogovor> DogovorRepository
+        {
+            get
+            {
+                if (dogovorRepository == null)
+                {
+                    dogovorRepository = new GenericRepository<Dogovor>(context);                   
+                }
+                return dogovorRepository;
+            }
+        }
 
         public GenericRepository<Employee> EmployeeRepository
         {
@@ -42,9 +55,9 @@ namespace NEO_SYSTEM_TECHNOLOGY.DAL
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed) 
+            if (!disposed)
             {
-                if(disposing)
+                if (disposing)
                 {
                     context.Dispose();
                 }

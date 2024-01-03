@@ -10,7 +10,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Entity
         public string OrderHeader { get; set; }
 
         
-        public decimal DogovorSum { get; set; }
+        public double DogovorSum { get; set; }
 
        
         public DateTime StartDate { get; set; }

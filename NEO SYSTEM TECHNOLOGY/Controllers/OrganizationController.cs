@@ -42,15 +42,13 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
             if (formData.OrganizationID == 0)
             {
                 var organization = organizationVM.AddNewOrganization(formData);
-                unitOfWork.OrganizationRepository.Insert(organization);
-                unitOfWork.Save();
+                unitOfWork.OrganizationRepository.Insert(organization);               
             }
             else
             {
                 var organizationInDb = unitOfWork.OrganizationRepository.GetByID(formData.OrganizationID);
                 var organizationToUpdate = organizationVM.EditOrganization(organizationInDb, formData);
                 unitOfWork.OrganizationRepository.Update(organizationToUpdate);
-
             }
             unitOfWork.Save();
 

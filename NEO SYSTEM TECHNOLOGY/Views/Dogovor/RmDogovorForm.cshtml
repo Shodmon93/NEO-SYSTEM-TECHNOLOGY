@@ -1,4 +1,4 @@
-﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.RmDogovorOrganization
+﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.RmDogovorOrganizationVM
 @using NEO_SYSTEM_TECHNOLOGY.Entity.Enum
 
 @{
@@ -6,7 +6,7 @@
 }
 <h3 style="margin: 0px 25px;">Составить Рамочный Договор</h3>
 
-@using (Html.BeginForm("Save", "Dogovor", FormMethod.Post, new { style = "margin: 20px;" }))
+@using (Html.BeginForm("Save", "RmDogovor", FormMethod.Post, new { style = "margin: 20px;" }))
 {
     @Html.ValidationSummary()
     ;

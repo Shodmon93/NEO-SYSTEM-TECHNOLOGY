@@ -1,0 +1,106 @@
+﻿@model NEO_SYSTEM_TECHNOLOGY.Entity.Dogovor
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<style>
+    .bg-blue {
+        background-color: aliceblue;
+        padding: 25px;
+    }
+
+    .classname {
+        display: block;
+        width: 150px;
+        height: 150px;
+        text-indent: -9999px; /* hides the link text */
+    }
+
+    /* Target table headers and make their lines bold */
+    .table th {
+        border: 1px solid black; /* Set border properties */
+        font-weight: bold; /* Make table headers bold */
+        padding: 8px;
+        text-align: center;
+    }
+
+    .table td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+        .organization-details
+
+    {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .organization-name {
+        text-align: right; /* Align organization name to the right */
+        margin-bottom: 20px; /* Adjust space between organization name and employees */
+    }
+
+    .employees {
+        width: 100%; /* Occupy full width */
+        overflow-x: auto;
+    }
+
+    .organization-details {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+</style>
+
+
+<div class="bg-blue">
+    <div class="organization-details">
+        <div class="organization-name">
+            <h2 style="font-size: 20px; display: inline-block; border-bottom: 1px solid #000;">@Html.DisplayName(Model.ID.ToString())</h2>
+        </div>
+
+        <div class="employees">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Контактное лицо</th>
+                        <th>Номер Телефона</th>
+                        <th>Почта</th>
+                        <th>Почта</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr @* onclick="location.href='@Url.Action("EditEmployee", "Employee", new { employeeId = employee.ID })';" style="cursor: pointer;" *@>
+                        <td>@Model.OrderHeader</td>
+                        <td>@Model.Currency</td>
+                        <td>@Model.StartDate</td>
+                        <td>@Model.EndDate</td>
+                    </tr>
+                    @foreach (var dogovor in Model.Zakaz)
+                    {
+                        <tr> 
+                            <td>
+                                @dogovor.OrderNumber
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+@*     @Html.ActionLink("Удалить", "Delete", "Organization", new { orgId = Model.OrganizationID }, new { @class = "btn btn-default btn-outline-primary" })
+    @Html.ActionLink("Добавить", "AddNewEmployee", "Employee", new { organizationId = Model.OrganizationID }, new { @class = "btn btn-default btn-outline-primary" })
+
+</div>
+
+
+<div style="padding: 25px">
+    @Html.ActionLink("Разовой Договор", "AddNewDogovor", "Dogovor", new { organizationId = Model.OrganizationID, isOneTimeDogovor = true }, new { @class = "btn btn-default btn-outline-primary" })
+    @Html.ActionLink("Рамочный Договор", "AddNewDogovor", "Dogovor", new { organizationId = Model.OrganizationID, isOneTimeDogovor = false }, new { @class = "btn btn-default btn-outline-primary" })
+</div>
+ *@
+

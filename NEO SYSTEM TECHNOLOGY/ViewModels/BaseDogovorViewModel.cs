@@ -47,7 +47,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
             }
             else
             {
-                RmDogovorOrganization rmDogovorOrganization = new RmDogovorOrganization()
+                RmDogovorOrganizationVM rmDogovorOrganization = new RmDogovorOrganizationVM()
                 {
                     OrganizationId = organization.ID,
                     OrganizationName = organization.Name,

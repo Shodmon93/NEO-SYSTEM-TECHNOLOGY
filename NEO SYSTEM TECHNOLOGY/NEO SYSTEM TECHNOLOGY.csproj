@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>NEO_SYSTEM_TECHNOLOGY</RootNamespace>
+    <UserSecretsId>2975b43f-5b03-48f6-a1c9-7b284ef34452</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

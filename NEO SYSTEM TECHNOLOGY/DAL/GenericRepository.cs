@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NEO_SYSTEM_TECHNOLOGY.Data;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace NEO_SYSTEM_TECHNOLOGY.DAL
 {
@@ -24,6 +25,22 @@ namespace NEO_SYSTEM_TECHNOLOGY.DAL
             {
                 query = query.Include(includeProperty);
             }
+
+            return query.AsNoTracking().ToList();
+
+
+        }
+
+
+        public virtual IEnumerable<TEntity> GetAll(Expression<Func<TEntity, object>>[] include2, Expression<Func<TEntity, bool>> filter)
+        {
+            IQueryable<TEntity> query = _entities;
+
+            foreach (var property in include2)
+            {
+                query = query.Include(property);
+            }
+            query = query.Where(filter);
 
             return query.AsNoTracking().ToList();
         }

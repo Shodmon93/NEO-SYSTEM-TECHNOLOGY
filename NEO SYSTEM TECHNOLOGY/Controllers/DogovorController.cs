@@ -12,19 +12,17 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
 {
     public class DogovorController : BaseController
     {
-        private const decimal TAX = 15;
-
         private readonly ApplicationDbContext _context;
         private readonly UnitOfWork unitOfWork;
-        private OrganizationDogovorVM _dogovorVM;
-        private RmDogovorOrganization _rmDogovorVM;
+        private readonly OrganizationDogovorVM _dogovorVM;
+        private readonly RmDogovorOrganizationVM _rmDogovorVM;
 
         public DogovorController()
         {
             _context = new ApplicationDbContext();
             unitOfWork = new UnitOfWork();
             _dogovorVM = new OrganizationDogovorVM();
-            _rmDogovorVM = new RmDogovorOrganization();
+            _rmDogovorVM = new RmDogovorOrganizationVM();
         }
 
         public IActionResult Index()
@@ -96,13 +94,13 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
         public IActionResult RmDogovorIndex()
         {
             var dogovorInDb = _context.Dogovors.Include(p => p.Zakaz).Include(p => p.Organization).ToList();
-            RmDogovorOrganization rmDogovor = new RmDogovorOrganization();
-            List<RmDogovorOrganization> list = new List<RmDogovorOrganization>();
+            RmDogovorOrganizationVM rmDogovor = new RmDogovorOrganizationVM();
+            List<RmDogovorOrganizationVM> list = new List<RmDogovorOrganizationVM>();
             foreach (var d in dogovorInDb)
             {
                 if (d.IsOneTimeDogovor == false)
                 {
-                    list.Add(new RmDogovorOrganization
+                    list.Add(new RmDogovorOrganizationVM
                     {
                         OrganizationName = d.Organization.Name,
                         Orders = d.Zakaz,
@@ -121,12 +119,12 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
             return View(list);
         }
 
-        public IActionResult RmDogovorSave(RmDogovorOrganization rmViewModel)
+        public IActionResult RmDogovorSave(RmDogovorOrganizationVM rmViewModel)
         {
             var organizationInDb = _context.Organizations.Single(p => p.ID == rmViewModel.OrganizationId);
             if (!ModelState.IsValid)
             {
-                var vm = new RmDogovorOrganization
+                var vm = new RmDogovorOrganizationVM
                 {
                     OrganizationName = organizationInDb.Name,
                     OrderHeader = rmViewModel.OrderHeader,

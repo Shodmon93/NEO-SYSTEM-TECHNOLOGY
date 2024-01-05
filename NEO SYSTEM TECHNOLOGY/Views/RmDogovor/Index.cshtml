@@ -22,7 +22,7 @@
                 <tr>
                     <td style='vertical-align:middle'>@item.OrganizationName</td>
                     <td style="text-align: center; vertical-align: middle">
-                    @Html.ActionLink(item.OrderHeader.ToString(), "DogovorDetails", "Dogovor", new { dogovorID = item.DogovorId }, new { @style = "text-decoration:none; color: black" })
+                    @Html.ActionLink(item.OrderHeader.ToString(), "Details", "RmDogovor", new { dogovorId = item.DogovorId }, new { @style = "text-decoration:none; color: black" })
                     </td>
                     <td style="text-align: center; vertical-align: middle">@item.StartDate.ToString("dd/MM/yyyy")</td>
                     <td style="text-align: center; vertical-align: middle">@item.EndDate.ToString("dd/MM/yyyy")</td>
@@ -56,8 +56,7 @@
                     </td>
 
                 </tr>
-
-        }
+                }
 
         </tbody>
 

@@ -30,6 +30,8 @@ namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
         public Organization Organization { get; set; }
         public Dogovor Dogovor { get; set; }
 
+        public IFormFile DogFile { get; set; }
+
 
 
 

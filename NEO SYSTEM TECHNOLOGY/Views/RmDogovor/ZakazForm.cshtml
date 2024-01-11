@@ -1,0 +1,106 @@
+﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.RmDogovorOrganizationVM
+<style>
+    /* Simplified styles */
+    .form-container {
+        margin-left: 50px;
+        display: inline-flex;
+        justify-content: start;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .info-section,
+    .form-section {
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    .info-section {
+        flex: 0 0 auto; /* Allow info-section to shrink or grow */
+        width: 580px;
+    }
+
+    .form-section {
+        flex: 1 1 auto; /* Allow form-section to grow to fill remaining space */
+        min-width: min-content; /* Set minimum width based on content */
+    }
+
+    .input-container {
+        margin-bottom: 15px;
+        display: flex; /* Align label and input in a row */
+        align-items: center; /* Vertically center the content */
+    }
+
+        .input-container label {
+            width: 200px; /* Adjust label width as needed */
+            margin-right: 20px; /* Create space between label and input */
+        }
+</style>
+
+<div class="form-container">
+    <section class="info-section">
+        <h2 style="font-size: 40px; display: inline-block; border-bottom: 1px solid #000;">@Model.OrganizationName</h2>
+        <div>
+            <label>Номер Контракта: </label>
+            <span>@Model.OrderHeader</span>
+        </div>
+
+        <div>
+            <label>Дата Контракта:</label>
+            <span>@Model.StartDate</span>
+        </div>
+        <div>
+            <label>Дата окончания контракта:</label>
+            <span>@Model.EndDate</span>
+        </div>
+
+    </section>
+
+    @using (Html.BeginForm("SaveNewZakaz", "RmDogovor", FormMethod.Post))
+    {
+        <section class="form-section">
+            <h2>Новый Заказ К договору @Model.OrderHeader</h2>
+
+            <!-- Input fields for new order -->
+            <div class="input-container">
+                @Html.LabelFor(model => model.OrderNumber)
+                @Html.EditorFor(model => model.OrderNumber)
+                @Html.ValidationMessageFor(model => model.OrderNumber)
+            </div>
+
+
+            <div class="input-container">
+                @Html.LabelFor(model => model.OrderSum)
+                @Html.EditorFor(model => model.OrderSum)
+                @Html.ValidationMessageFor(model => model.OrderSum)
+            </div>
+
+            <div class="input-container">
+                @Html.LabelFor(model => model.OrderStartDate)
+                @Html.EditorFor(model => model.OrderStartDate)
+                @Html.ValidationMessageFor(model => model.OrderStartDate)
+            </div>
+
+            <div class="input-container">
+                @Html.LabelFor(model => model.OrderEndDate)
+                @Html.EditorFor(model => model.OrderEndDate)
+                @Html.ValidationMessageFor(model => model.OrderEndDate)
+            </div>
+
+            <!-- Repeat for other order details -->
+
+            <div>
+                <input class="btn btn-primary" type="submit" value="Submit Order" />
+            </div>
+            @Html.HiddenFor(p => p.OrganizationName)
+            @Html.HiddenFor(p => p.OrderHeader)
+            @Html.HiddenFor(p => p.StartDate)
+            @Html.HiddenFor(p => p.EndDate)
+            @Html.HiddenFor(p => p.DogovorId)
+        </section>
+    }
+
+</div>

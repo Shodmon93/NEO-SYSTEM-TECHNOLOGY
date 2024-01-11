@@ -21,7 +21,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.DAL
         {
             IQueryable<TEntity> query = _entities;
 
-            foreach (var includeProperty in includeProperties) 
+            foreach (var includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);
             }
@@ -31,8 +31,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.DAL
 
         }
 
-
-        public virtual IEnumerable<TEntity> GetAll(Expression<Func<TEntity, object>>[] include2, Expression<Func<TEntity, bool>> filter)
+        public virtual IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] include2)
         {
             IQueryable<TEntity> query = _entities;
 

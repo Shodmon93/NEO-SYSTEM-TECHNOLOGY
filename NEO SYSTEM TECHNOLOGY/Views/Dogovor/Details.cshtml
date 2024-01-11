@@ -34,6 +34,27 @@
         display: inline-block;
         vertical-align: middle;
     }
+
+    iframe {
+        width: 100%; /* Optional: Set the width of the iframe */
+        height: 500px; /* Optional: Set the height of the iframe */
+        border: none; /* Remove the border around the iframe */
+    }
+
+        /* Hide controls in the iframe */
+        iframe::-webkit-scrollbar {
+            display: none; /* Hide the scrollbar for WebKit (Chrome, Safari, Edge) */
+        }
+
+    /* Additional styles for Firefox */
+    iframe {
+        overflow: -moz-scrollbars-none;
+    }
+
+        iframe::-moz-scrollbar {
+            display: none;
+        }
+
 </style>
 
 <div class="container">
@@ -54,6 +75,15 @@
             <p>@Model.DogovorSum @Model.Currency</p>
         </div>
     </div>
+
+    <div class='child'>
+
+        <iframe src="data:application/pdf;base64,@Model.FilePath" width="600" height="400"></iframe>
+
+    </div>
+</div>
+
+
 
     <div>
         @Html.ActionLink("Выставить Счет", "AddNewReceipt", "Receipt", new { dogovorId = Model.DogovorId }, new { @class = "btn btn-default btn-outline-primary" })

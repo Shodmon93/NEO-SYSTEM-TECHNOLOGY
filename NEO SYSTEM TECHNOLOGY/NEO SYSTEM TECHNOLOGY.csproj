@@ -8,10 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="stores\201\Information Security Awareness for new staff - 2023_Certificate of Completion.pdf" />
+    <Content Include="stores\201\Welcome to FIF_TJ_Сертификат о прохождении курса.pdf" />
+    <Content Include="stores\202\Выявление и устранение бессознательных предубежденийUncovering and Mitigating Unconscious Bias - TJ_Сертификат об окончании курса.pdf" />
+    <Content Include="stores\202\Противодействие отмыванию денег и финансированию терроризма - AMLCFT - TJ_Сертификат об окончании.pdf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.22" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.22" />

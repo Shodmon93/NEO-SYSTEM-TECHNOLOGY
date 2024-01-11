@@ -45,7 +45,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
 
             return HandleDogovor(isOneTimeDogovor,
                 () => View("DogovorForm", dogovor),
-                () => View("RmDogovorForm", rmDogovor));
+                () => RedirectToAction("AddNewRmDogovor", "RmDogovor", rmDogovor));
 
         }
         public IActionResult Save(OrganizationDogovorVM viewModel)
@@ -179,6 +179,7 @@ namespace NEO_SYSTEM_TECHNOLOGY.Controllers
                 OrganizationName = dogovorInDb.Organization.Name,
                 StartDate = dogovorInDb.StartDate,
                 EndDate = dogovorInDb.EndDate,
+                FilePath = Convert.ToBase64String(dogovorInDb.Content)
             };
 
             return View("Details", viewModel);

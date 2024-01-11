@@ -1,9 +1,36 @@
 ﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.OrganizationDogovorVM
 @using NEO_SYSTEM_TECHNOLOGY.Entity.Enum
 
+<style>
+    .custom-file-upload {
+        border: 2px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+        background-color: #f0f0f0;
+        color: #333;
+        border-radius: 4px;
+    }
+
+        .custom-file-upload:hover {
+            background-color: #e0e0e0;
+        }
+
+    #file-upload {
+        display: -ms-inline-flexbox;
+    }
+
+    #file-name {
+        margin-left: 10px;
+        font-style: italic;
+        color: #031533;
+    }
+
+</style>
+
 <h3 style="margin: 0px 25px;">Составить новый договор</h3>
 
-@using (Html.BeginForm("Save", "Dogovor", FormMethod.Post, new { style = "margin: 20px;" }))
+@using (Html.BeginForm("Save", "Dogovor", FormMethod.Post, new { style = "margin: 20px;", enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary();
 
@@ -41,6 +68,17 @@
         @Html.LabelFor(p => p.Currency, new {style="margin: 0px 5px;"})
         @Html.DropDownListFor(p => p.Currency, Html.GetEnumSelectList<Currency>(),"Выберите валюту", new {@class="form-control text-box", style="width:500px; height:35px"})
     </div>
+
+    <div class="form-group" style="margin:15px 15px">
+
+       <label asp-for="@Model.DogFile"> 
+           <i class="fa fa-cloud-upload">Загрузить Договор: </i>
+       </label>
+        <input asp-for="@Model.DogFile"  id="file-upload" type="file" accept=".pdf" />
+       
+       <span id="file-upload"> </span>
+    </div>
+
 
     @Html.HiddenFor(p => p.OrganizationId)
     @Html.HiddenFor(p => p.OrganizationName)

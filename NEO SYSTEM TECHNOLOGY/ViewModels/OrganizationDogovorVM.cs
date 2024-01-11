@@ -1,10 +1,14 @@
 ﻿using NEO_SYSTEM_TECHNOLOGY.Entity;
+using System.Globalization;
+using System.Text;
 
 namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
 {
     public class OrganizationDogovorVM : BaseDogovorViewModel
     {
         public Zakaz Order { get; set; }
+        public string FilePath { get; set; }
+        public byte[] myPdfFile { get; set; }
 
         public IEnumerable<OrganizationDogovorVM> GetAllDogovors(IEnumerable<Dogovor> allDogovors)
         {
@@ -21,7 +25,8 @@ namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
                     IsOneTimeDogovor = dogovor.IsOneTimeDogovor,
                     Currency = dogovor.Currency,
                     DogovorSum = dogovor.DogovorSum,
-                    DogovorId = dogovor.ID
+                    DogovorId = dogovor.ID,
+                    FilePath = Convert.ToBase64String(dogovor.Content)
 
                 }).ToList();
             return filteredDogovors;
@@ -32,18 +37,40 @@ namespace NEO_SYSTEM_TECHNOLOGY.ViewModels
             var priceWithTax = dogovorVM.DogovorSum + (dogovorVM.DogovorSum * (TAX / 100.0));
             var finalDogovorSum = dogovorVM.IsVatIncluded ? priceWithTax : dogovorVM.DogovorSum;
 
-            Dogovor dogovor = new Dogovor()
-            {
-                OrderHeader = dogovorVM.OrderHeader,
-                DogovorSum = finalDogovorSum,
-                StartDate = dogovorVM.StartDate,
-                EndDate = dogovorVM.EndDate,
-                Currency = dogovorVM.Currency,
-                IsVatIncluded = dogovorVM.IsVatIncluded,
-                IsOneTimeDogovor = dogovorVM.IsOneTimeDogovor,
-                Organization = organization
+            var path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Files");
 
-            };
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            FileInfo fileInfo = new FileInfo(dogovorVM.DogFile.FileName);
+            string fileName = fileInfo.Name + fileInfo.Extension;
+            string fileNameWithPath = Path.Combine(path, fileName);
+
+            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+            {
+                dogovorVM.DogFile.CopyTo(stream);
+            }
+
+
+            var memoryStream = new MemoryStream();
+
+            dogovorVM.DogFile.CopyTo(memoryStream);
+
+                Dogovor dogovor = new Dogovor()
+                {
+                    OrderHeader = dogovorVM.OrderHeader,
+                    DogovorSum = finalDogovorSum,
+                    StartDate = dogovorVM.StartDate,
+                    EndDate = dogovorVM.EndDate,
+                    Currency = dogovorVM.Currency,
+                    IsVatIncluded = dogovorVM.IsVatIncluded,
+                    IsOneTimeDogovor = dogovorVM.IsOneTimeDogovor,
+                    Organization = organization,
+                    Content = memoryStream.ToArray(),
+
+                };
             return dogovor;
         }
         public Dogovor GetDogovorToUpdate(Dogovor dogovor, OrganizationDogovorVM dogovorVM)

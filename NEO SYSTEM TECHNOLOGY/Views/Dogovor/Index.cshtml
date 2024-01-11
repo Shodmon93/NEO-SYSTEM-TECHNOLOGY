@@ -12,6 +12,7 @@
                 <th style="text-align: center; vertical-align: middle">Сумма контракта в Сомони с учетом НДС</th>
                 <th style="text-align: center; vertical-align: middle">Сумма контракта в USD без учета НДС</th>
                 <th style="text-align: center; vertical-align: middle">Сумма контракта в USD с учетом НДС</th>
+                <th style="text-align: center; vertical-align: middle">Договор PDF</th>
             </tr>
         </thead>
 
@@ -26,6 +27,7 @@
                     </td>
                     <td style="text-align: center; vertical-align: middle">@item.StartDate.ToString("dd/MM/yyyy")</td>
                     <td style="text-align: center; vertical-align: middle">@item.EndDate.ToString("dd/MM/yyyy")</td>
+
 
                     <td style="text-align: center; vertical-align: middle">
                     @if (!item.IsVatIncluded && (int)item.Currency == 1)
@@ -53,6 +55,10 @@
                     {
                             <p>@item.DogovorSum</p>
                     }
+                    </td>
+
+                    <td style="text-align: center; vertical-align: middle">
+                        <a href="data:application/pdf;base64,@item.FilePath" download="downloaded_file.pdf">Скачать договор</a>
                     </td>
 
                 </tr>

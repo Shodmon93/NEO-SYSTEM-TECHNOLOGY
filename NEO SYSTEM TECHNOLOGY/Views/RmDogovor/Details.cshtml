@@ -1,4 +1,4 @@
-﻿@model NEO_SYSTEM_TECHNOLOGY.Entity.Dogovor
+﻿@model NEO_SYSTEM_TECHNOLOGY.ViewModels.RmDogovorOrganizationVM
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -59,48 +59,69 @@
 <div class="bg-blue">
     <div class="organization-details">
         <div class="organization-name">
-            <h2 style="font-size: 20px; display: inline-block; border-bottom: 1px solid #000;">@Html.DisplayName(Model.ID.ToString())</h2>
+            <h2 style="font-size: 20px; display: inline-block; border-bottom: 1px solid #000;">@Html.DisplayName(Model.OrganizationName)</h2>
         </div>
 
         <div class="employees">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Контактное лицо</th>
-                        <th>Номер Телефона</th>
-                        <th>Почта</th>
-                        <th>Почта</th>
+                        <th>Номер Контракта</th>
+                        <th>Дата Контракта</th>
+                        <th>Дата окончания контракта</th>
+                        <th>Сумма контракта</th>
+                        <th>Договор PDF</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr @* onclick="location.href='@Url.Action("EditEmployee", "Employee", new { employeeId = employee.ID })';" style="cursor: pointer;" *@>
                         <td>@Model.OrderHeader</td>
-                        <td>@Model.Currency</td>
                         <td>@Model.StartDate</td>
                         <td>@Model.EndDate</td>
+                        <td>@Model.DogovorSum</td>
+                        <td></td>
                     </tr>
-                    @foreach (var dogovor in Model.Zakaz)
-                    {
-                        <tr> 
-                            <td>
-                                @dogovor.OrderNumber
-                            </td>
-                        </tr>
-                    }
                 </tbody>
             </table>
         </div>
     </div>
+    @* @Html.ActionLink("Удалить Контракт", "Delete", "Organization", new { orgId = Model.ID }, new { @class = "btn btn-default btn-outline-primary" }) *@
+    @Html.ActionLink("Добавить Новый Заказ к Договору", "AddNewZakaz", "RmDogovor", new { dogovorId = Model.DogovorId }, new { @class = "btn btn-default btn-outline-primary" })
+    @Html.HiddenFor(p => p.DogovorId)
+</div>
+<hr style="border: 1px solid black"/>
 
-@*     @Html.ActionLink("Удалить", "Delete", "Organization", new { orgId = Model.OrganizationID }, new { @class = "btn btn-default btn-outline-primary" })
-    @Html.ActionLink("Добавить", "AddNewEmployee", "Employee", new { organizationId = Model.OrganizationID }, new { @class = "btn btn-default btn-outline-primary" })
+<div class="organization-details" style="padding: 25px">
+    <h2 style="font-size: 20px; display: inline-block; border-bottom: 1px solid #000;">Все заказы к данному Договору</h2>
+    <div class="employees">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Номер Заказа</th>
+                    <th>Дата Заказа</th>
+                    <th>Дата окончания Заказа</th>
+                    <th>Сумма Заказа</th>
+                    <th>Заказ PDF</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    @foreach (var zakaz in Model.Orders)
+                    {
+                    <tr>
 
+                        <td>@zakaz.OrderNumber</td>
+                        <td>@zakaz.StartDate</td>
+                        <td>@zakaz.EndDate</td>
+                        <td>@zakaz.ZakazSum</td>
+                        <td>PDF</td>
+                    </tr>
+                    }
+               
+            </tbody>
+            
+        </table>
+    </div>
 </div>
 
-
-<div style="padding: 25px">
-    @Html.ActionLink("Разовой Договор", "AddNewDogovor", "Dogovor", new { organizationId = Model.OrganizationID, isOneTimeDogovor = true }, new { @class = "btn btn-default btn-outline-primary" })
-    @Html.ActionLink("Рамочный Договор", "AddNewDogovor", "Dogovor", new { organizationId = Model.OrganizationID, isOneTimeDogovor = false }, new { @class = "btn btn-default btn-outline-primary" })
-</div>
- *@
 
